@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
-//import Menu from './pages/Menu';
+import Menu from './pages/Menu';
 //import About from './pages/About';
 //import Contact from './pages/Contact';
 import './layout.css';
@@ -21,8 +21,8 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            {/*<Route path="/menu" element={<Menu />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/menu" element={<Menu />} />
+            {/*<Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />*/}
           </Routes>
         </main>
