@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.js
+import { Routes, Route } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/NavBar";
+import Footer from "./components/Footer";
+import Ticker from "./components/Ticker";
+import Home from "./pages/Home";
+import Category from "./pages/Category";
+import { VirtualData } from "./data/virtualData";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-shell">
+      <Navbar categories={VirtualData.categories} />
+      <Ticker items={VirtualData.ticker} />
+      <Routes>
+        <Route path="/" element={<Home data={VirtualData} />} />
+        {/* 频道页：/channel/银河 /channel/深度 ... */}
+        <Route
+          path="/channel/:name"
+          element={<Category data={VirtualData} />}
+        />
+        {/* 兜底：可以做 404 */}
+        <Route path="*" element={<Home data={VirtualData} />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;
