@@ -1,0 +1,56 @@
+/* 固定样式：左侧“快讯”不滚动，右侧列表在视口内垂直切换 */
+.vticker {
+  border-top: 1px solid var(--border);
+  background: #f3f4f6;
+}
+
+.vticker-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.vticker-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  background: #0f172a;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.vticker-viewport {
+  position: relative;
+  overflow: hidden;
+  /* 行高可调，通过行高决定每次切换的位移 */
+  --row-h: 36px;
+  height: var(--row-h);
+  flex: 1;
+}
+
+.vticker-track {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.vticker-item {
+  display: flex;
+  align-items: center;
+  height: var(--row-h);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* 减少动画（系统偏好）时，停在第一条 */
+@media (prefers-reduced-motion: reduce) {
+  .vticker-track { transition: none !important; transform: translateY(0) !important; }
+}

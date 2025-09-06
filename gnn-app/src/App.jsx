@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import Ticker from "./components/Ticker";
 import Home from "./pages/Home";
 import Category from "./pages/Category";
-import { VirtualData } from "./data/virtualData";
+import { VirtualData } from "./data/VirtualData";
 
 function App() {
   return (
