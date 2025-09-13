@@ -5,7 +5,7 @@ export const VirtualData = {
       "中立商业站发布运行通告：为配合多方行会协调会计核查，延后本周的珍稀合金与遗器竞拍；多家行商与投资团体出现短线回流与套保操作。",
     image:
       // 金融/宏观：城市金融区夜景
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1600&auto=format&fit=crop",
+      "chors compass station.png",
     category: "银河",
   },
 
@@ -31,7 +31,7 @@ export const VirtualData = {
       title: "星海共同体审议‘跨文明金融指引 2.0’：匿名结算阈值与仲裁时限成焦点",
       image:
         // 深度/分析：抽象会议&数据可视化
-        "https://images.unsplash.com/photo-1535223289827-42f1e9919769?q=80&w=1600&auto=format&fit=crop",
+        "stellaris-megacorp-interstellar-assembly.jpg",
       category: "深度",
     },
   ],
@@ -50,7 +50,7 @@ export const VirtualData = {
       title: "奴玛教团宣布新季‘财富誓约’：开放跨站点托管账户审计接口",
       image:
         // 金融/财富符号：金属条/金库氛围
-        "https://images.unsplash.com/photo-1508385082359-f38ae991e8f2?q=80&w=1600&auto=format&fit=crop",
+        "stock-market-line-chart.jpg",
       time: "11 分钟前",
     },
     {
@@ -58,7 +58,7 @@ export const VirtualData = {
       title: "范格利集团试点‘到舰即商’快速结算舱：航线逗留时间缩短 18%",
       image:
         // 银河/贸易：航站舱门与通道（到舰即商的通行感）
-        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop",
+        "Merchant transport ship.png",
       time: "22 分钟前",
     },
     {
@@ -108,7 +108,7 @@ export const VirtualData = {
       desc: "从航线密度到押注敞口：联盟内部的资本分工与避险范式。",
       image:
         // 经济：股票/数据屏
-        "https://images.unsplash.com/photo-1550565118-3a14e8d038f0?q=80&w=1600&auto=format&fit=crop",
+        "Evt_cargoship_caravan.png",
       url: "#",
     },
     {
