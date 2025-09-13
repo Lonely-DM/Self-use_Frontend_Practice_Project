@@ -1,4 +1,3 @@
-/* 固定样式：左侧“快讯”不滚动，右侧列表在视口内垂直切换 */
 .vticker {
   border-top: 1px solid var(--border);
   background: #f3f4f6;
@@ -27,7 +26,6 @@
 .vticker-viewport {
   position: relative;
   overflow: hidden;
-  /* 行高可调，通过行高决定每次切换的位移 */
   --row-h: 36px;
   height: var(--row-h);
   flex: 1;
@@ -50,7 +48,9 @@
   color: #374151;
 }
 
-/* 减少动画（系统偏好）时，停在第一条 */
 @media (prefers-reduced-motion: reduce) {
-  .vticker-track { transition: none !important; transform: translateY(0) !important; }
+  .vticker-track {
+    transition: none !important;
+    transform: translateY(0) !important;
+  }
 }
