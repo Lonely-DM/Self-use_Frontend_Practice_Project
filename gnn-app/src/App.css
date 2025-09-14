@@ -31,3 +31,13 @@ main {
   background: #fef2f2;
   color: #991b1b;
 }
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

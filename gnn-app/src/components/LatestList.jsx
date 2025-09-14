@@ -25,7 +25,7 @@ export default function LatestList({ items = [] }) {
       </div>
 
       <ul className="latest-list">
-        {list.map((a) => (
+        {list.slice(0, 5).map((a) => (
           <li key={a.id} className="latest-item">
             <a href="#" className="latest-link">
               <div className="latest-thumb">

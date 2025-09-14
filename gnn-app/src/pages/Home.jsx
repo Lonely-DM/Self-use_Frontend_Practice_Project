@@ -15,7 +15,7 @@ export default function Home({ data }) {
         <section className="home-left">
           <Hero data={hero} />
           <div className="headline-grid">
-            {headlines.map((h) => (
+            {headlines.slice(0, 3).map((h) => (
               <HeadlineCard key={h.id} item={h} />
             ))}
           </div>

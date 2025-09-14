@@ -1,4 +1,6 @@
-.latest { padding: 12px; }
+.latest {
+  padding: 12px;
+}
 
 .latest-head {
   display: flex;
@@ -30,7 +32,10 @@
   margin: 0;
 }
 
-.latest-item { display: flex; gap: 12px; }
+.latest-item {
+  display: flex;
+  gap: 12px;
+}
 
 .latest-link {
   display: flex;
@@ -55,7 +60,9 @@
   display: block;
 }
 
-.latest-meta { min-width: 0; }
+.latest-meta {
+  min-width: 0;
+}
 
 .latest-item-title {
   font-size: 14px;
@@ -69,4 +76,22 @@
   margin: 6px 0 0 0;
   font-size: 12px;
   color: var(--muted);
+}
+
+.latest {
+  padding: 12px;
+  line-height: 1;
+}
+
+.latest-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.latest-link {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
 }

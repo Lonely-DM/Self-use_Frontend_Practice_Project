@@ -14,14 +14,13 @@ export default function Navbar({ categories = [] }) {
           {categories.map((c) => (
             <NavLink
               key={c}
-              to={`/channel/${c}`}
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
+              to={`/channel/${encodeURIComponent(c)}`}
+              className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
               end
             >
               {c}
             </NavLink>
+
           ))}
         </nav>
       </div>

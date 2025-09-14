@@ -2,83 +2,153 @@ import { pub } from "../utils/pubUrl";
 
 export const VirtualData = {
   hero: {
+    id: "hero",
+    category: "银河",
     title: "绰尔的罗盘临时冻结高价值拍卖：跨星域资金短线回流中立港",
     subtitle:
-      "中立商业站发布运行通告：为配合多方行会协调会计核查，延后本周的珍稀合金与遗器竞拍；多家行商与投资团体出现短线回流与套保操作。",
-    // 本地图：public/images/chors-compass-station.png
+      "中立商业站发布临时通告：为配合多方行会会计核查，延后珍稀合金与遗器竞拍；多家行商与投资团体短线回流与套保同步进行。",
     image: pub("images/chors-compass-station.png"),
-    category: "银河",
+    url: "/article/hero",
   },
 
+  // 头条（可在首页“头条”区使用，也会被频道页按类别筛选）
   headlines: [
     {
       id: "h1",
-      title:
-        "宇宙行商联盟三大行商同步调整汇兑：能量币现货对信用点升水扩大",
-      image:
-        "https://images.unsplash.com/photo-1556745753-b2904692b3cd?q=80&w=1600&auto=format&fit=crop",
       category: "经济",
+      title: "宇宙行商联盟同步调整汇兑：能量币现货对信用点升水扩大",
+      subtitle: "三大行商表示：短期升水合理，跨站小额结算将优先保障民生与科研场景。",
+      image: "https://images.unsplash.com/photo-1556745753-b2904692b3cd?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/h1",
     },
     {
       id: "h2",
-      title: "海星共和国发布蓝潮节开放日程：外交访客签额上调 12%",
-      image:
-        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop",
       category: "文化",
+      title: "海星共和国发布蓝潮节开放日程：外交访客签额上调 12%",
+      subtitle: "文化署称将新增夜光海域导览与环礁步道预约通道，强化节律友好型旅行。",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/h2",
     },
     {
       id: "h3",
-      title:
-        "星海共同体审议‘跨文明金融指引 2.0’：匿名结算阈值与仲裁时限成焦点",
-      // 本地图：public/images/stellaris-megacorp-interstellar-assembly.jpg
-      image: pub("images/stellaris-megacorp-interstellar-assembly.jpg"),
       category: "深度",
+      title: "星海共同体审议《跨文明金融指引 2.0》：匿名阈值与仲裁时限成焦点",
+      subtitle: "多方代表关注小额匿名便利与跨站合规边界，仲裁时限或将缩短至 48 小时。",
+      image: pub("images/stellaris-megacorp-interstellar-assembly.jpg"),
+      url: "/article/h3",
+    },
+    {
+      id: "h4",
+      category: "银河",
+      title: "中立站‘灰色通道’实施流量配额试行：押注区监管加严",
+      subtitle: "站务协调会称：不针对个人旅客，重点在高频转仓与异常对冲。",
+      image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/h4",
+    },
+    {
+      id: "h5",
+      category: "科技",
+      title: "边境自由带观测站升级：双星系统辐射窗数据实时共享",
+      subtitle: "科研船队可订阅轨道参数波动警报，降低着陆任务能耗与风险。",
+      image: "https://images.unsplash.com/photo-1473929735471-b4e6d343e694?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/h5",
     },
   ],
 
+  // 最新动态（新增必需字段 time，表示发布时间，相对时间即可）
   latest: [
     {
       id: "l1",
-      title:
-        "拉奇工业集团在边境自由带部署可移动微型工厂：以信用点按小时租赁",
-      image:
-        "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop",
+      category: "科技",
+      title: "拉奇工业集团部署可移动微型工厂：按小时租赁",
+      subtitle: "模块化生产线进驻边境自由带，支持小批量快速交付与回收复用。",
+      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/l1",
       time: "5 分钟前",
     },
     {
       id: "l2",
-      title:
-        "奴玛教团宣布新季‘财富誓约’：开放跨站点托管账户审计接口",
-      // 本地图：public/images/stock-market-line-chart.jpg
+      category: "经济",
+      title: "奴玛教团推出新季‘财富誓约’：开放托管账户审计接口",
+      subtitle: "教团表示：在信仰与合规之间建立‘可核验的透明度’，便利跨站清算。",
       image: pub("images/stock-market-line-chart.jpg"),
+      url: "/article/l2",
       time: "11 分钟前",
     },
     {
       id: "l3",
-      title:
-        "范格利集团试点‘到舰即商’快速结算舱：航线逗留时间缩短 18%",
-      // 本地图：public/images/merchant-transport-ship.png
+      category: "银河",
+      title: "范格利集团试点‘到舰即商’快速结算舱：逗留时间缩短 18%",
+      subtitle: "新一代对接程序支持离线预验签与到港即结，缓解高峰拥堵。",
       image: pub("images/merchant-transport-ship.png"),
+      url: "/article/l3",
       time: "22 分钟前",
     },
     {
       id: "l4",
-      title:
-        "GNN-Prime二级频道上线新审核规则：匿名上传延迟播出机制生效",
-      image:
-        "https://images.unsplash.com/photo-1473181488821-2d23949a045a?q=80&w=1600&auto=format&fit=crop",
+      category: "媒体",
+      title: "GNN-Prime 二级频道更新：匿名上传延迟播出机制生效",
+      subtitle: "平台称‘延迟并不审查’，主要用于溯源风控与纠错回滚。",
+      image: "https://images.unsplash.com/photo-1473181488821-2d23949a045a?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/l4",
       time: "33 分钟前",
+    },
+    {
+      id: "l5",
+      category: "文化",
+      title: "蓝潮节志愿者报名窗口开启：新增海域夜行守则培训",
+      subtitle: "主办方强调‘慢即合理’，夜光海水观赏分时限流。",
+      image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/l5",
+      time: "1 小时前",
     },
   ],
 
+  // 热读榜（可在首页“热读榜”区使用，也会被频道页按类别筛选）
   mostRead: [
-    { id: "m1", title: "中立港仲裁指南：从临时冻结到履约担保的三步走" },
-    { id: "m2", title: "珍珠潜水员与渔夫岗位：海星共和国消费品链条如何运转" },
-    { id: "m3", title: "宇宙行商的谈判术：到舰即商的价格带与让利区" },
-    { id: "m4", title: "蓝潮节摄影手册：光学共振带下的最佳曝光时段" },
-    { id: "m5", title: "信用点 vs 能量币：浮动汇率下的家庭理财与商站小额结算" },
+    {
+      id: "m1",
+      category: "银河",
+      title: "中立港仲裁指南：从临时冻结到履约担保的三步走",
+      subtitle: "标准流程、所需材料与限时节点一览。",
+      image: "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/m1",
+    },
+    {
+      id: "m2",
+      category: "文化",
+      title: "珍珠潜水员与渔夫岗位：海星共和国消费品链条如何运转",
+      subtitle: "当自然馈赠被写进岗位表，人与海形成稳定契约。",
+      image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/m2",
+    },
+    {
+      id: "m3",
+      category: "银河",
+      title: "宇宙行商的谈判术：到舰即商的价格带与让利区",
+      subtitle: "停靠时间与让利区间的边际博弈。",
+      image: pub("images/evt-cargoship-caravan.png"),
+      url: "/article/m3",
+    },
+    {
+      id: "m4",
+      category: "文化",
+      title: "蓝潮节摄影手册：光学共振带下的最佳曝光时段",
+      subtitle: "从快门到滤镜，避免过曝的三个诀窍。",
+      image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/m4",
+    },
+    {
+      id: "m5",
+      category: "经济",
+      title: "信用点 vs 能量币：浮动汇率下的家庭理财与小额结算",
+      subtitle: "双轨并行的日常选择题：延迟满足与手续费敏感度。",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/m5",
+    },
   ],
 
+  // 跑马灯（文本即可，非新闻实体）
   ticker: [
     "绰尔站务协调会：本周高价值押注区维持观察状态……",
     "星海共同体就跨站匿名通道发起临时议案……",
@@ -86,110 +156,101 @@ export const VirtualData = {
     "海星共和国文化署：蓝潮节开放引导名额追加放出……",
   ],
 
-  categories: ["银河", "深度", "科技", "经济", "文化"],
+  categories: ["银河", "深度", "科技", "经济", "文化", "媒体"],
 
+  // 深度 · 专题（保留 desc 给 FeatureCard，同时提供统一的 subtitle）
   features: [
     {
       id: "f1",
-      tag: "Deep Dive",
       category: "深度",
       title: "绰尔的罗盘黑市生态：非主权平台如何维持‘可控的无序’",
+      subtitle:
+        "赌场、拍卖、仲裁与灰色通道并存的结构性妥协：谁在定义执行边界？",
       desc:
         "赌场、拍卖、仲裁与灰色通道并存的结构性妥协：谁在定义执行边界？",
-      image:
-        "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=1600&auto=format&fit=crop",
-      url: "#",
+      image: "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/f1",
     },
     {
       id: "f2",
-      tag: "Analysis",
       category: "经济",
       title: "三大行商资产负债表读解：范格利、奴玛、拉奇的不同风险模型",
+      subtitle: "从航线密度到押注敞口：联盟内部的资本分工与避险范式。",
       desc: "从航线密度到押注敞口：联盟内部的资本分工与避险范式。",
-      // 本地图：public/images/evt-cargoship-caravan.png
       image: pub("images/evt-cargoship-caravan.png"),
-      url: "#",
+      url: "/article/f2",
     },
     {
       id: "f3",
-      tag: "Feature",
       category: "文化",
       title: "蓝潮节的秩序：当‘慢即合理’成为制度性节律",
+      subtitle: "节律哲学如何把城市运转改写成‘文化结构呈现’？",
       desc: "节律哲学如何把城市运转改写成‘文化结构呈现’？",
-      image:
-        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1600&auto=format&fit=crop",
-      url: "#",
+      image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/f3",
     },
     {
       id: "f4",
-      tag: "Doctrine",
       category: "银河",
       title: "星域与首府：四跳扩展规则下的行政边界与冲突缓冲",
-      desc:
-        "当虫洞与星门被排除在外，‘可达性’如何塑造治理成本？",
-      image:
-        "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1600&auto=format&fit=crop",
-      url: "#",
+      subtitle: "当虫洞与星门被排除在外，‘可达性’如何塑造治理成本？",
+      desc: "当虫洞与星门被排除在外，‘可达性’如何塑造治理成本？",
+      image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/f4",
     },
     {
       id: "f5",
-      tag: "Economy",
       category: "经济",
       title: "双轨金融实战：能量币清算与信用点零售之间的政策折衷",
+      subtitle: "中立港的浮动汇率、押注保证金与跨境小额结算样本。",
       desc: "中立港的浮动汇率、押注保证金与跨境小额结算样本。",
-      image:
-        "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop",
-      url: "#",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/f5",
     },
     {
       id: "f6",
-      tag: "Tech",
       category: "科技",
       title: "GNN 的‘算法编辑部’：播放节奏如何改变事件的社会半衰期",
+      subtitle: "从快讯到专题：二级频道的节流与放大机制。",
       desc: "从快讯到专题：二级频道的节流与放大机制。",
-      image:
-        "https://images.unsplash.com/photo-1581092334363-1e7eab04de91?q=80&w=1600&auto=format&fit=crop",
-      url: "#",
+      image: pub("images/pexels-cookiecutter.jpg"),
+      url: "/article/f6",
     },
     {
       id: "f7",
-      tag: "Spotlight",
       category: "银河",
       title: "自由贸易枢纽的日常：中立站的合同制安全与外包秩序",
+      subtitle: "安保公司、行会轮值与‘非干预条款’的现实运作。",
       desc: "安保公司、行会轮值与‘非干预条款’的现实运作。",
-      image:
-        "https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop",
-      url: "#",
+      image: "https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/f7",
     },
     {
       id: "f8",
-      tag: "People",
       category: "文化",
       title: "珍珠潜水员：从文化象征到消费品链条的制度化岗位",
+      subtitle: "当自然馈赠被写入岗位表，人与海的关系如何制度化？",
       desc: "当自然馈赠被写入岗位表，人与海的关系如何制度化？",
-      image:
-        "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1600&auto=format&fit=crop",
-      url: "#",
+      image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/f8",
     },
     {
       id: "f9",
-      tag: "Sci",
       category: "科技",
       title: "双星系统 P 型宜居：辐射窗、潮汐锁定与热惯性的三重约束",
+      subtitle: "殖民体的城市布局如何随轨道参数自适应？",
       desc: "殖民体的城市布局如何随轨道参数自适应？",
-      image:
-        "https://images.unsplash.com/photo-1473929735471-b4e6d343e694?q=80&w=1600&auto=format&fit=crop",
-      url: "#",
+      image: "https://images.unsplash.com/photo-1473929735471-b4e6d343e694?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/f9",
     },
     {
       id: "f10",
-      tag: "Media",
       category: "深度",
       title: "当 GNN 定义‘事件’：公信力悖论与流量策略的边界",
+      subtitle: "匿名上传、延迟播出与‘可控争议’的生产逻辑。",
       desc: "匿名上传、延迟播出与‘可控争议’的生产逻辑。",
-      image:
-        "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1600&auto=format&fit=crop",
-      url: "#",
+      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1600&auto=format&fit=crop",
+      url: "/article/f10",
     },
   ],
 };

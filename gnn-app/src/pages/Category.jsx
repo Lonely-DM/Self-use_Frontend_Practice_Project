@@ -1,44 +1,64 @@
-// src/pages/Category.jsx
 import { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import HeadlineCard from "../components/HeadlineCard";
+import FeatureCard from "../components/FeatureCard";
+import Hero from "../components/Hero";
+import "./Category.css";
 
 export default function Category({ data }) {
-  const { name } = useParams();
-  const list = useMemo(() => {
-    const all = [];
-    // 将 hero 与 headlines 混合后按类别筛选
-    if (data.hero && data.hero.category === name) {
-      all.push({ ...data.hero, id: "hero" });
-    }
-    all.push(...data.headlines.filter((h) => h.category === name));
-    return all;
-  }, [name, data]);
+  const { category: raw } = useParams();
+  const category = decodeURIComponent(raw || "").trim();
+
+  const { hero, headlines = [], features = [] } = data || {};
+  const sameCategory = (a = "", b = "") =>
+    a.toString().trim().toLowerCase() === b.toString().trim().toLowerCase();
+
+  // 只取当前分类的数据
+  const heads = useMemo(
+    () => headlines.filter(h => sameCategory(h.category, category)),
+    [headlines, category]
+  );
+  const feats = useMemo(
+    () => features.filter(f => sameCategory(f.category, category)),
+    [features, category]
+  );
+
+  // Hero 只在它的分类频道页显示，且单独占一行
+  const showHero = !!(hero && sameCategory(hero.category, category));
+
+  const hasAny = showHero || heads.length > 0 || feats.length > 0;
 
   return (
-    <main className="container" style={{ padding: "24px 0" }}>
-      <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 800 }}>{name}</h1>
-        <Link to="/" style={{ color: "var(--brand)", fontWeight: 700 }}>
-          返回首页
-        </Link>
-      </div>
+    <main className="container channel">
+      <header className="channel-head">
+        <h1 className="channel-title">{category}</h1>
+        <Link to="/" className="channel-back">返回首页</Link>
+      </header>
 
-      {list.length === 0 ? (
-        <p style={{ color: "var(--muted)" }}>暂无该频道内容，稍后再来看看～</p>
-      ) : (
-        <div
-          style={{
-            marginTop: 16,
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            gap: 16,
-          }}
-        >
-          {list.map((item) => (
-            <HeadlineCard key={item.id} item={item} />
-          ))}
-        </div>
+      {!hasAny && <div className="channel-empty">暂无“{category}”相关内容。</div>}
+
+      {showHero && (
+        <section className="channel-hero">
+          <Hero data={hero} />
+        </section>
+      )}
+
+      {heads.length > 0 && (
+        <>
+          <h2 className="section-title">头条</h2>
+          <div className="headline-grid">
+            {heads.map(h => <HeadlineCard key={h.id} item={h} />)}
+          </div>
+        </>
+      )}
+
+      {feats.length > 0 && (
+        <>
+          <h2 className="section-title">深度 · 专题</h2>
+          <div className="feature-grid">
+            {feats.map(f => <FeatureCard key={f.id} item={f} />)}
+          </div>
+        </>
       )}
     </main>
   );
