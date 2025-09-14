@@ -10,7 +10,7 @@ export default function FeatureCard({ item }) {
         <img src={item.image} alt={item.title} />
       </div>
       <div className="feature-body">
-        <p className="feature-tag">{item.tag || "Feature"}</p>
+        <span className="badge feature-category">{item.category}</span>
         <h3 className="feature-title">{item.title}</h3>
         {item.desc && <p className="feature-desc">{item.desc}</p>}
       </div>

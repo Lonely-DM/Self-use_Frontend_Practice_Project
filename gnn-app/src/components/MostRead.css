@@ -1,0 +1,45 @@
+.mostread { padding: 12px; margin-top: 16px; }
+
+.mostread-title {
+  font-size: 18px;
+  font-weight: 900;
+  margin: 0 0 10px 0;
+}
+
+.mostread-list {
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.mostread-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.mostread-rank {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #0f172a;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.mostread-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.mostread-link:hover { text-decoration: underline; }

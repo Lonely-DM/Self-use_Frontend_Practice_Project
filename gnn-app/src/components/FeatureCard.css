@@ -12,7 +12,7 @@
 
 .feature-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 }
 
 .feature-media {
@@ -40,13 +40,11 @@
   gap: 6px;
 }
 
-.feature-tag {
-  margin: 0;
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: var(--muted);
+.feature-category {
+  max-width: max-content;
+  background: #f4f4f5;
+  color: #111827;
+  border-color: #e5e7eb;
 }
 
 .feature-title {

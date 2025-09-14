@@ -1,0 +1,42 @@
+.headline-card {
+  display: block;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.headline-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,.06);
+}
+
+.headline-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.headline-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .3s ease;
+}
+.headline-card:hover .headline-img {
+  transform: scale(1.04);
+}
+
+.headline-body {
+  padding: 12px;
+}
+
+.headline-badge {
+  background: #f4f4f5;
+  color: #111827;
+  border-color: #e5e7eb;
+}
+
+.headline-title {
+  margin: 6px 0 0 0;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--text);
+}

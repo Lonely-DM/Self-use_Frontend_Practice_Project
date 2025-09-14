@@ -1,0 +1,25 @@
+.hero { display: block; }
+
+.hero-media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-body { padding: 16px; }
+
+.hero-title {
+  margin: 8px 0 6px 0;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.hero-subtitle { color: var(--muted); }
