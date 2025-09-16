@@ -1,6 +1,12 @@
+// Footer.jsx
+import { NavLink } from "react-router-dom";
 import "./Footer.css";
 
-export default function Footer() {
+const DEFAULT_CATEGORIES = ["银河", "深度", "科技", "经济", "文化"];
+
+export default function Footer({ categories = [] }) {
+  const cats = categories.length ? categories : DEFAULT_CATEGORIES;
+
   return (
     <footer className="footer">
       <div className="container footer-grid">
@@ -22,11 +28,19 @@ export default function Footer() {
         <div>
           <h4 className="footer-title">栏目</h4>
           <ul className="footer-list">
-            <li><a href="#">银河</a></li>
-            <li><a href="#">深度</a></li>
-            <li><a href="#">科技</a></li>
-            <li><a href="#">经济</a></li>
-            <li><a href="#">文化</a></li>
+            {cats.map((c) => (
+              <li key={c}>
+                <NavLink
+                  to={`/channel/${encodeURIComponent(c)}`}
+                  className={({ isActive }) =>
+                    isActive ? "footer-link active" : "footer-link"
+                  }
+                  end
+                >
+                  {c}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -34,20 +48,20 @@ export default function Footer() {
         <div>
           <h4 className="footer-title">关于</h4>
           <ul className="footer-list">
-            <li><a href="#">编辑部</a></li>
-            <li><a href="#">使用条款</a></li>
-            <li><a href="#">隐私政策</a></li>
-            <li><a href="#">联系我们</a></li>
+            <li><NavLink className="footer-link" to="/about/editorial">编辑部</NavLink></li>
+            <li><NavLink className="footer-link" to="/about/terms">使用条款</NavLink></li>
+            <li><NavLink className="footer-link" to="/about/privacy">隐私政策</NavLink></li>
+            <li><NavLink className="footer-link" to="/about/contact">联系我们</NavLink></li>
           </ul>
         </div>
 
-        {/* 社交媒体 */}
+        {/* 社交媒体（外链） */}
         <div>
           <h4 className="footer-title">关注我们</h4>
           <ul className="footer-list">
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">YouTube</a></li>
-            <li><a href="#">Discord</a></li>
+            <li><a className="footer-link" href="https://twitter.com" target="_blank" rel="noreferrer">Twitter</a></li>
+            <li><a className="footer-link" href="https://youtube.com" target="_blank" rel="noreferrer">YouTube</a></li>
+            <li><a className="footer-link" href="https://discord.com" target="_blank" rel="noreferrer">Discord</a></li>
           </ul>
         </div>
       </div>

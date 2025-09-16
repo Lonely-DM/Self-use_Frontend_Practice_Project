@@ -50,7 +50,7 @@ export const VirtualData = {
       category: "科技",
       title: "边境自由带观测站升级：双星系统辐射窗数据实时共享",
       subtitle: "科研船队可订阅轨道参数波动警报，降低着陆任务能耗与风险。",
-      image: "https://images.unsplash.com/photo-1473929735471-b4e6d343e694?q=80&w=1600&auto=format&fit=crop",
+      image: pub("images/stellaris-binary-star-system.jpg"),
       url: "/article/h5",
     },
   ],
@@ -222,7 +222,7 @@ export const VirtualData = {
       title: "自由贸易枢纽的日常：中立站的合同制安全与外包秩序",
       subtitle: "安保公司、行会轮值与‘非干预条款’的现实运作。",
       desc: "安保公司、行会轮值与‘非干预条款’的现实运作。",
-      image: "https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop",
+      image: pub("images/future-like-contract.png"),
       url: "/article/f7",
     },
     {
@@ -240,7 +240,7 @@ export const VirtualData = {
       title: "双星系统 P 型宜居：辐射窗、潮汐锁定与热惯性的三重约束",
       subtitle: "殖民体的城市布局如何随轨道参数自适应？",
       desc: "殖民体的城市布局如何随轨道参数自适应？",
-      image: "https://images.unsplash.com/photo-1473929735471-b4e6d343e694?q=80&w=1600&auto=format&fit=crop",
+      image: pub("images/desert-world-landscapes.jpg"),
       url: "/article/f9",
     },
     {

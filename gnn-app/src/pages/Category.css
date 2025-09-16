@@ -1,32 +1,46 @@
-.category-page {
-  padding: 16px;
-}
+.channel { padding-top: 16px; padding-bottom: 24px; }
 
-.category-header {
-  margin-bottom: 20px;
-}
-
-.category-header h1 {
-  font-size: 24px;
-  font-weight: 900;
-  margin: 0;
-  color: var(--text);
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.category-empty {
-  font-size: 16px;
-  color: var(--muted);
-  margin-top: 20px;
-  text-align: center;
-}
-
-.channel-hero {
+.channel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;   /* 标题在左，“返回首页”在右 */
   margin-bottom: 12px;
 }
 
+.channel-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.channel-back {
+  font-size: 13px;
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 700;
+}
+.channel-back:hover { text-decoration: underline; }
+
+.channel-count {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.channel-empty {
+  padding: 16px;
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+  color: var(--muted);
+}
+
+.news-grid {
+  display: grid;
+  gap: 12px;
+  align-items: start;
+}
+@media (min-width: 768px) {
+  .news-grid { grid-template-columns: repeat(3, 1fr); }
+}

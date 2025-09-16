@@ -12,6 +12,7 @@ function App() {
   return (
     <div className="app-shell">
       <Navbar categories={VirtualData.categories} />
+      <Footer categories={VirtualData.categories} />
       <Ticker items={VirtualData.ticker} />
       <Routes>
         <Route path="/" element={<Home data={VirtualData} />} />
