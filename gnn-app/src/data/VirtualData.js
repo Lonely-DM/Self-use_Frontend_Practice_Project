@@ -18,7 +18,7 @@ export const VirtualData = {
       category: "经济",
       title: "宇宙行商联盟同步调整汇兑：能量币现货对信用点升水扩大",
       subtitle: "三大行商表示：短期升水合理，跨站小额结算将优先保障民生与科研场景。",
-      image: "https://images.unsplash.com/photo-1556745753-b2904692b3cd?q=80&w=1600&auto=format&fit=crop",
+      image: pub("images/merchant-fleet.jpg"),
       url: "/article/h1",
     },
     {
@@ -204,7 +204,7 @@ export const VirtualData = {
       title: "双轨金融实战：能量币清算与信用点零售之间的政策折衷",
       subtitle: "中立港的浮动汇率、押注保证金与跨境小额结算样本。",
       desc: "中立港的浮动汇率、押注保证金与跨境小额结算样本。",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop",
+      image: pub("images/merchant-fleet.jpg"),
       url: "/article/f5",
     },
     {
@@ -243,14 +243,6 @@ export const VirtualData = {
       image: pub("images/desert-world-landscapes.jpg"),
       url: "/article/f9",
     },
-    {
-      id: "f10",
-      category: "深度",
-      title: "当 GNN 定义‘事件’：公信力悖论与流量策略的边界",
-      subtitle: "匿名上传、延迟播出与‘可控争议’的生产逻辑。",
-      desc: "匿名上传、延迟播出与‘可控争议’的生产逻辑。",
-      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1600&auto=format&fit=crop",
-      url: "/article/f10",
-    },
+
   ],
 };

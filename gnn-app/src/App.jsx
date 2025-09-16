@@ -12,7 +12,6 @@ function App() {
   return (
     <div className="app-shell">
       <Navbar categories={VirtualData.categories} />
-      <Footer categories={VirtualData.categories} />
       <Ticker items={VirtualData.ticker} />
       <Routes>
         <Route path="/" element={<Home data={VirtualData} />} />
@@ -26,7 +25,7 @@ function App() {
         {/* 兜底路由（可替换成 NotFound 页面） */}
         <Route path="*" element={<Home data={VirtualData} />} />
       </Routes>
-      <Footer />
+      <Footer categories={VirtualData.categories} />
     </div>
   );
 }

@@ -15,7 +15,9 @@
 
 @media (min-width: 768px) {
   .footer-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr auto auto auto;
+    justify-content: end;
+    column-gap: 100px;
   }
 }
 
