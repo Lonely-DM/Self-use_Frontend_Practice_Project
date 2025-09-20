@@ -1,8 +1,9 @@
 .vticker {
-  border-top: 1px solid var(--border);
-  background: #f3f4f6;
+  background: #cc0000;
+  color: #fff;
   padding-top: 10px;
   padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .vticker-inner {
@@ -19,9 +20,9 @@
   padding: 0 8px;
   border-radius: 6px;
   font-size: 12px;
-  font-weight: 800;
-  background: #0f172a;
-  color: #fff;
+  font-weight: 900;
+  background: #fff;
+  color: #cc0000;
   flex-shrink: 0;
 }
 
@@ -47,7 +48,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 14px;
-  color: #374151;
+  color: #fff;
 }
 
 @media (prefers-reduced-motion: reduce) {

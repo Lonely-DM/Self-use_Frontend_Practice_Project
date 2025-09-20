@@ -1,4 +1,3 @@
-// src/components/HeadlineCard.jsx
 import "./HeadlineCard.css";
 
 export default function HeadlineCard({ item }) {

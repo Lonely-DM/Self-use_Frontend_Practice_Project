@@ -1,5 +1,8 @@
 .latest {
   padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
 }
 
 .latest-head {
@@ -10,8 +13,9 @@
 }
 
 .latest-title {
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
   margin: 0;
 }
 
@@ -25,31 +29,43 @@
 }
 
 .latest-list {
-  display: grid;
+  display: flex;
   gap: 12px;
   list-style: none;
   padding: 0;
   margin: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
 }
 
 .latest-item {
-  display: flex;
-  gap: 12px;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  flex: 0 0 auto;
+  width: 200px;
+  scroll-snap-align: start;
 }
+
+@media (max-width: 480px) {
+  .latest-item {
+    width: 180px;
+  }
+}
+
 
 .latest-link {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 8px;
   width: 100%;
   text-decoration: none;
   color: inherit;
 }
 
 .latest-thumb {
-  width: 128px;
-  height: 80px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 10px;
   flex-shrink: 0;
@@ -80,20 +96,8 @@
   color: var(--muted);
 }
 
-.latest {
-  padding: 12px;
-  line-height: 1;
-}
-
-.latest-item {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.latest-link {
-  display: flex;
-  gap: 12px;
-  width: 100%;
-  align-items: center;
+@media (max-width: 480px) {
+  .latest-item {
+    width: 200px;
+  }
 }

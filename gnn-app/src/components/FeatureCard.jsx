@@ -1,4 +1,3 @@
-// src/components/FeatureCard.jsx
 import "./FeatureCard.css";
 
 export default function FeatureCard({ item }) {

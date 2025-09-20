@@ -71,7 +71,7 @@ export default function Ticker({
 
   return (
     <div className="vticker">
-      <div className="container vticker-inner" style={{ paddingRight: 0 }}>
+      <div className="container-wide vticker-inner" style={{ paddingRight: 0 }}>
         <span className="vticker-badge">快讯</span>
 
         <div className="vticker-viewport" style={{ ["--row-h"]: `${rowHeight}px` }}>

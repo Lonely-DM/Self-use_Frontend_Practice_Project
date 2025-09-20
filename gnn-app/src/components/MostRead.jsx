@@ -1,4 +1,3 @@
-// src/components/MostRead.jsx
 import "./MostRead.css";
 
 export default function MostRead({ items = [] }) {

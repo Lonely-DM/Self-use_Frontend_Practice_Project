@@ -4,7 +4,7 @@ import "./Navbar.css";
 export default function Navbar({ categories = [] }) {
   return (
     <header className="navbar">
-      <div className="container navbar-inner">
+      <div className="container-wide navbar-inner">
         <Link to="/" className="brand" aria-label="GNN Home">
           <span className="brand-badge">GNN</span>
           <span className="brand-title">Galactic News Network</span>

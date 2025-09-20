@@ -1,9 +1,16 @@
-.mostread { padding: 12px; margin-top: 16px; }
+.mostread {
+  padding: 12px;
+  margin-top: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+}
 
 .mostread-title {
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 16px;
+  font-weight: 800;
   margin: 0 0 10px 0;
+  text-transform: uppercase;
 }
 
 .mostread-list {
@@ -42,4 +49,6 @@
   text-decoration: none;
 }
 
-.mostread-link:hover { text-decoration: underline; }
+.mostread-link:hover {
+  text-decoration: underline;
+}

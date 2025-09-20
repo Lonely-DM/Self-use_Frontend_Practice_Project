@@ -1,4 +1,3 @@
-// Footer.jsx
 import { NavLink } from "react-router-dom";
 import "./Footer.css";
 
@@ -9,7 +8,7 @@ export default function Footer({ categories = [] }) {
 
   return (
     <footer className="footer">
-      <div className="container footer-grid">
+      <div className="container-wide footer-grid">
         {/* 品牌 & 简介 */}
         <div>
           <div className="footer-brand">

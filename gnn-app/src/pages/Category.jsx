@@ -1,4 +1,3 @@
-// src/pages/Category.jsx
 import { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import FeatureCard from "../components/FeatureCard";
@@ -13,7 +12,6 @@ export default function Category({ data }) {
   const sameCategory = (a = "", b = "") =>
     a.toString().trim().toLowerCase() === b.toString().trim().toLowerCase();
 
-  // 合并四类内容 → 统一用 FeatureCard 展示
   const items = useMemo(() => {
     const list = [];
 
@@ -22,7 +20,6 @@ export default function Category({ data }) {
         list.push({
           ...obj,
           id: `${type}-${obj.id || "0"}`,
-          // 适配 FeatureCard：无 desc 时用 subtitle 兜底
           desc: obj.desc ?? obj.subtitle ?? "",
         });
       }

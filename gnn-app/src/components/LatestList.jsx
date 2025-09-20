@@ -1,4 +1,3 @@
-// src/components/LatestList.jsx
 import { useMemo, useState } from "react";
 import "./LatestList.css";
 

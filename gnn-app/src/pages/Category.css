@@ -1,9 +1,12 @@
-.channel { padding-top: 16px; padding-bottom: 24px; }
+.channel {
+  padding-top: 16px;
+  padding-bottom: 24px;
+}
 
 .channel-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;   /* 标题在左，“返回首页”在右 */
+  justify-content: space-between;
   margin-bottom: 12px;
 }
 
@@ -21,7 +24,10 @@
   text-decoration: none;
   font-weight: 700;
 }
-.channel-back:hover { text-decoration: underline; }
+
+.channel-back:hover {
+  text-decoration: underline;
+}
 
 .channel-count {
   font-size: 12px;
@@ -41,6 +47,9 @@
   gap: 12px;
   align-items: start;
 }
+
 @media (min-width: 768px) {
-  .news-grid { grid-template-columns: repeat(3, 1fr); }
+  .news-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
