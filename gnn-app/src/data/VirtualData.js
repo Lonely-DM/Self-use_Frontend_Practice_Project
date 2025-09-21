@@ -102,6 +102,16 @@ export const VirtualData = {
       url: "/article/l5",
       time: "1 小时前",
     },
+    {
+      id: "l6",
+      category: "银河",
+      title: "海星共和国与勇达里姆王国航线争议：申请联邦境内过境还是绕银河一圈？",
+      subtitle: "由于人类联邦几乎占据整个银河西南，两国之间的最短航线必须跨越其边境。联邦的孤立主义政策让过境申请前景不明，而绕行外环航道则意味着数倍的航程与成本。",
+      image: pub("images/hyperlane-dispute.png"),
+      url: "/article/l6",
+      time: "2 小时前",
+    },
+    
   ],
 
   // 热读榜（可在首页“热读榜”区使用，也会被频道页按类别筛选）

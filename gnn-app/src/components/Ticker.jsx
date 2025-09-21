@@ -3,7 +3,7 @@ import "./Ticker.css";
 
 export default function Ticker({
   items = [],
-  pauseMs = 2000,
+  pauseMs = 1800,
   jumpMs = 250,
   rowHeight = 36,
 }) {
