@@ -2,7 +2,7 @@ import "./HeadlineCard.css";
 
 export default function HeadlineCard({ item }) {
   return (
-    <a href="#" className="card headline-card">
+    <a href={item.url || "#"} className="card headline-card">
       <div className="headline-media">
         <img className="headline-img" src={item.image} alt={item.title} />
       </div>

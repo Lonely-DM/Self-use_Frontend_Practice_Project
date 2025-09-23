@@ -26,7 +26,7 @@ export default function LatestList({ items = [] }) {
       <ul className="latest-list">
         {list.slice(0, 5).map((a) => (
           <li key={a.id} className="latest-item">
-            <a href="#" className="latest-link">
+            <a href={a.url || "#"} className="latest-link">
               <div className="latest-thumb">
                 <img src={a.image} alt={a.title} />
               </div>

@@ -4,7 +4,7 @@ export default function Hero({ data }) {
   if (!data) return null;
 
   return (
-    <a href="#" className="card hero">
+    <a href={data.url || "#"} className="card hero">
       <div className="hero-media">
         <img className="hero-img" src={data.image} alt={data.title} />
       </div>

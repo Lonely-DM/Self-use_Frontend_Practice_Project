@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Ticker from "./components/Ticker";
 import Home from "./pages/Home";
 import Category from "./pages/Category";
+import NewsDetailPage from "./pages/NewsDetailPage";
 import { VirtualData } from "./data/VirtualData";
 
 function App() {
@@ -20,6 +21,12 @@ function App() {
         <Route
           path="/channel/:category"
           element={<Category data={VirtualData} />}
+        />
+
+        {/* 新闻详情页：/article/:id */}
+        <Route
+          path="/article/:id"
+          element={<NewsDetailPage data={VirtualData.headlines} />}
         />
 
         {/* 兜底路由（可替换成 NotFound 页面） */}

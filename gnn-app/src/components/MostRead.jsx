@@ -8,7 +8,7 @@ export default function MostRead({ items = [] }) {
         {items.slice(0, 5).map((m, idx) => (
           <li key={m.id} className="mostread-item">
             <span className="mostread-rank">{idx + 1}</span>
-            <a href="#" className="mostread-link">{m.title}</a>
+            <a href={m.url || "#"} className="mostread-link">{m.title}</a>
           </li>
         ))}
       </ol>
