@@ -26,7 +26,7 @@ function App() {
         {/* 新闻详情页：/article/:id */}
         <Route
           path="/article/:id"
-          element={<NewsDetailPage data={VirtualData.headlines} />}
+          element={<NewsDetailPage data={VirtualData} />}
         />
 
         {/* 兜底路由（可替换成 NotFound 页面） */}
