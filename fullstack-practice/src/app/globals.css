@@ -1,0 +1,163 @@
+﻿@import "tailwindcss";
+
+:root {
+  --background: #fff8ef;
+  --foreground: #2f241f;
+  --font-body: "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    sans-serif;
+  --font-display: "Georgia", "Times New Roman", "Songti SC", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.18;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: #8d5b4c;
+  color: #fff8ef;
+}
+
+.surface-warm {
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: linear-gradient(180deg, rgba(255, 251, 246, 0.9), rgba(255, 245, 238, 0.84));
+  box-shadow: 0 20px 80px rgba(163, 98, 57, 0.12);
+  backdrop-filter: blur(18px);
+}
+
+.surface-soft {
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 248, 243, 0.76));
+  box-shadow: 0 18px 60px rgba(178, 122, 89, 0.12);
+  backdrop-filter: blur(18px);
+}
+
+.surface-cool {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at top right, rgba(200, 225, 255, 0.22), transparent 30%),
+    linear-gradient(160deg, #6d4e4f 0%, #4f3d51 40%, #24395a 100%);
+  box-shadow: 0 24px 90px rgba(59, 37, 57, 0.3);
+}
+
+.surface-blizzard {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(circle at top left, rgba(197, 232, 255, 0.22), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(255, 199, 221, 0.14), transparent 20%),
+    linear-gradient(145deg, #27405f 0%, #1d2940 48%, #141d31 100%);
+}
+
+.surface-blizzard::before {
+  content: "";
+  position: absolute;
+  inset: auto -10% -32% auto;
+  width: 240px;
+  height: 240px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 65%);
+  filter: blur(10px);
+}
+
+.menu-card-warm {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 16px 48px rgba(169, 126, 102, 0.14);
+  backdrop-filter: blur(12px);
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.menu-card-cool {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+  box-shadow: 0 18px 50px rgba(6, 15, 31, 0.26);
+  backdrop-filter: blur(14px);
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+.menu-card-warm:hover,
+.menu-card-cool:hover {
+  transform: translateY(-6px);
+}
+
+.menu-card-warm:hover {
+  box-shadow: 0 24px 60px rgba(169, 126, 102, 0.22);
+}
+
+.menu-card-cool:hover {
+  box-shadow: 0 26px 70px rgba(4, 12, 26, 0.34);
+}
+
+.reveal-up {
+  animation: revealUp 680ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.reveal-up-delay {
+  animation: revealUp 860ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.animate-shimmer {
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    transform: translateX(-120%);
+  }
+
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
