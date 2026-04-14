@@ -1,0 +1,28 @@
+﻿.card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(148, 163, 184, 0.14);
+}
+
+.label {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.title {
+  margin: 0.7rem 0 0;
+  font-size: 2rem;
+  color: #0f172a;
+}
+
+.text {
+  margin: 0.85rem 0 0;
+  max-width: 42rem;
+  line-height: 1.7;
+  color: #475569;
+}

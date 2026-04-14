@@ -1,3 +1,6 @@
+DEPRECATED FILE - ARCHIVED
+original JSON content below
+
 {
   "brand": {
     "name": "Gelato Cove",

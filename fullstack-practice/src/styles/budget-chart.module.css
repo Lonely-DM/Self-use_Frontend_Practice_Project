@@ -1,0 +1,142 @@
+.card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 12px 24px rgba(148, 163, 184, 0.12);
+  animation: fadeUp 0.7s ease-out both;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #64748b;
+}
+
+.title {
+  margin: 0.6rem 0 0;
+  font-size: 1.8rem;
+  color: #0f172a;
+}
+
+.chartLayout {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.4rem;
+  align-items: center;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+
+.chartWrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.chart {
+  width: 100%;
+  max-width: 240px;
+  transform: rotate(-90deg);
+}
+
+.track {
+  fill: none;
+  stroke: #e2e8f0;
+  stroke-width: 12;
+}
+
+.segment {
+  fill: none;
+  stroke: var(--segment-color);
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dashoffset: var(--offset);
+  animation: segmentReveal 0.7s ease-out both;
+}
+
+.chartCenter {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.centerLabel,
+.centerHint {
+  color: #64748b;
+}
+
+.centerValue {
+  margin: 0.25rem 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.legend {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 0.95rem;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.swatch {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 999px;
+}
+
+.legendName,
+.legendMeta {
+  margin: 0;
+}
+
+.legendMeta {
+  margin-top: 0.25rem;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+@media (max-width: 860px) {
+  .chartLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes segmentReveal {
+  from {
+    stroke-dasharray: 0 var(--circumference);
+  }
+
+  to {
+    stroke-dasharray: var(--segment-length) var(--circumference);
+  }
+}
