@@ -7,12 +7,14 @@ import PotsCard from "@/components/pots-card";
 import RecurringBills from "@/components/recurring-bills";
 import SummaryCards from "@/components/summary-cards";
 import TransactionsList from "@/components/transactions-list";
+import { useSettings } from "@/components/settings-provider";
 import styles from "@/styles/overview-page.module.css";
 
 export default function Home() {
   const [overview, setOverview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { t } = useSettings();
 
   useEffect(() => {
     let cancelled = false;
@@ -55,9 +57,9 @@ export default function Home() {
   return (
     <DashboardShell title="Personal Finance Dashboard" eyebrow="Overview">
       {loading ? (
-        <div className={styles.messageCard}>Loading finance overview...</div>
+        <div className={styles.messageCard}>{t("Loading finance overview...")}</div>
       ) : error ? (
-        <div className={`${styles.messageCard} ${styles.errorCard}`}>{error}</div>
+        <div className={`${styles.messageCard} ${styles.errorCard}`}>{t(error)}</div>
       ) : (
         <>
           <SummaryCards

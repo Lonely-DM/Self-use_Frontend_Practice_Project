@@ -1,11 +1,11 @@
-const currencyFormatter = new Intl.NumberFormat("zh-CN", {
+﻿const currencyFormatter = new Intl.NumberFormat("en-US", {
   style: "currency",
-  currency: "CNY",
+  currency: "USD",
   minimumFractionDigits: 0,
   maximumFractionDigits: 0,
 });
 
-const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
   month: "short",
   day: "numeric",
 });

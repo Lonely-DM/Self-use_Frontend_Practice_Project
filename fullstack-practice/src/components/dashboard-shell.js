@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import styles from "@/styles/dashboard-shell.module.css";
 import Sidebar from "@/components/sidebar";
+import { useSettings } from "@/components/settings-provider";
 
 export default function DashboardShell({
   title,
@@ -12,6 +13,7 @@ export default function DashboardShell({
   sidebarBalance = 0,
 }) {
   const [collapsed, setCollapsed] = useState(false);
+  const { t } = useSettings();
 
   const shellClassName = useMemo(
     () => `${styles.shell} ${collapsed ? styles.collapsed : ""}`.trim(),
@@ -30,8 +32,8 @@ export default function DashboardShell({
         <div className={styles.content}>
           <header className={styles.header}>
             <div>
-              <p className={styles.eyebrow}>{eyebrow}</p>
-              <h1 className={styles.title}>{title}</h1>
+              <p className={styles.eyebrow}>{t(eyebrow)}</p>
+              <h1 className={styles.title}>{t(title)}</h1>
             </div>
             {headerContent ? <div className={styles.headerContent}>{headerContent}</div> : null}
           </header>

@@ -7,9 +7,9 @@
 .messageCard {
   padding: 1.25rem 1.5rem;
   border-radius: 12px;
-  background: #ffffff;
-  color: #475569;
-  box-shadow: 0 16px 40px rgba(148, 163, 184, 0.14);
+  background: var(--surface);
+  color: var(--muted);
+  box-shadow: var(--shadow-strong);
 }
 
 .errorCard {

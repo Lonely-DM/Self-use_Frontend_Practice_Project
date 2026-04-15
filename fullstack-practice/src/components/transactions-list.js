@@ -1,13 +1,18 @@
+﻿"use client";
+
 import styles from "@/styles/transactions-list.module.css";
 import { formatCurrency, formatDate } from "@/lib/format";
+import { useSettings } from "@/components/settings-provider";
 
-export default function TransactionsList({ transactions = [], delay = 0 }) {
+function TransactionsList({ transactions = [], delay = 0 }) {
+  const { t } = useSettings();
+
   return (
     <section className={styles.card} style={{ animationDelay: `${delay}s` }}>
       <div className={styles.header}>
         <div>
-          <p className={styles.eyebrow}>Latest Activity</p>
-          <h2 className={styles.title}>Transactions</h2>
+          <p className={styles.eyebrow}>{t("Latest Activity")}</p>
+          <h2 className={styles.title}>{t("Transactions")}</h2>
         </div>
       </div>
 
@@ -27,7 +32,7 @@ export default function TransactionsList({ transactions = [], delay = 0 }) {
                 {transaction.type === "income" ? "+" : "-"}
                 {formatCurrency(transaction.amount)}
               </span>
-              <p className={styles.type}>{transaction.type}</p>
+              <p className={styles.type}>{t(transaction.type === "income" ? "Income" : "Expenses")}</p>
             </div>
           </article>
         ))}
@@ -35,3 +40,6 @@ export default function TransactionsList({ transactions = [], delay = 0 }) {
     </section>
   );
 }
+
+export { TransactionsList };
+export default TransactionsList;

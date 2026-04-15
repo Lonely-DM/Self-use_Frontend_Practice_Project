@@ -1,5 +1,8 @@
+﻿"use client";
+
 import styles from "@/styles/summary-cards.module.css";
 import { formatCurrency } from "@/lib/format";
+import { useSettings } from "@/components/settings-provider";
 
 const cards = [
   { key: "balance", label: "Current Balance" },
@@ -9,6 +12,7 @@ const cards = [
 
 export default function SummaryCards({ balance, income, expenses, delay = 0 }) {
   const values = { balance, income, expenses };
+  const { t } = useSettings();
 
   return (
     <section className={styles.grid}>
@@ -18,7 +22,7 @@ export default function SummaryCards({ balance, income, expenses, delay = 0 }) {
           className={styles.card}
           style={{ animationDelay: `${delay + index * 0.1}s` }}
         >
-          <p className={styles.label}>{card.label}</p>
+          <p className={styles.label}>{t(card.label)}</p>
           <p className={styles.value}>{formatCurrency(values[card.key])}</p>
         </article>
       ))}
