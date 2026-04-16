@@ -47,6 +47,13 @@
   line-height: 1.05;
 }
 
+.description {
+  margin: 0.75rem 0 0;
+  max-width: 38rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
 .headerContent {
   flex-shrink: 0;
 }

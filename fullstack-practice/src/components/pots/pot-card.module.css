@@ -1,0 +1,159 @@
+﻿.card {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+  animation: fadeUp 0.6s ease-out both;
+}
+
+.completed {
+  border-color: color-mix(in srgb, var(--pot-color) 55%, white 45%);
+  box-shadow: 0 16px 34px rgba(39, 124, 120, 0.18);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.name,
+.saved,
+.remaining,
+.updated,
+.badge {
+  margin: 0;
+}
+
+.name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.saved {
+  margin-top: 0.45rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.meta,
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.progressTrack {
+  overflow: hidden;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: var(--border-soft);
+}
+
+.progressFill {
+  width: var(--progress-width);
+  height: 100%;
+  border-radius: 999px;
+  background: var(--pot-color);
+  animation: fillBar 0.8s ease-out both;
+}
+
+.menuWrap {
+  position: relative;
+}
+
+.menuButton {
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  background: var(--surface-soft);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  z-index: 10;
+  display: grid;
+  min-width: 9rem;
+  padding: 0.4rem;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow-strong);
+}
+
+.menu button {
+  padding: 0.7rem 0.8rem;
+  border: 0;
+  border-radius: 10px;
+  text-align: left;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.menu button:hover {
+  background: var(--surface-soft);
+}
+
+.deleteAction {
+  color: #b91c1c !important;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  color: var(--foreground);
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: 1px solid color-mix(in srgb, var(--pot-color) 28%, var(--border-soft) 72%);
+}
+
+.completedBadge {
+  background: transparent;
+  color: color-mix(in srgb, var(--pot-color) 72%, var(--foreground) 28%);
+}
+
+@media (max-width: 640px) {
+  .header,
+  .meta,
+  .footer {
+    flex-direction: column;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fillBar {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: var(--progress-width);
+  }
+}

@@ -23,6 +23,10 @@ const translations = {
   "English": "英文",
   "Chinese": "中文",
   "Current Balance": "当前余额",
+  "Current Available": "当前可用资金",
+  "Available Balance": "可支配余额",
+  "Free Funds": "自由资金",
+  "In Pots": "储蓄罐内",
   "Income": "收入",
   "Expenses": "支出",
   "Latest Activity": "最近活动",
@@ -37,25 +41,67 @@ const translations = {
   "Target": "目标",
   "Section": "页面",
   "Page scaffold ready": "页面骨架已准备好",
+  "No recurring bills yet.": "暂无周期账单。",
+  "Track your savings goals and progress": "追踪你的储蓄目标与完成进度",
+  "New Pot": "新建储蓄罐",
+  "Total Saved": "已存总额",
+  "Total Targets": "目标总额",
+  "Loading pots...": "正在加载储蓄罐...",
+  "No saving pots yet.": "还没有储蓄目标。",
+  "Start your first goal today.": "今天就开始你的第一个目标吧。",
+  "Actions": "操作",
+  "Edit": "编辑",
+  "Add Funds": "存入资金",
+  "Withdraw": "取出资金",
+  "Delete": "删除",
+  "Remaining": "剩余",
+  "Updated": "更新于",
+  "Almost there 🎯": "快完成了 🎯",
+  "Completed": "已完成",
+  "Edit Pot": "编辑储蓄罐",
+  "Create a new savings goal": "创建新的储蓄目标",
+  "Name": "名称",
+  "Saved": "已存",
+  "Color": "颜色",
+  "Pick a pot accent color": "选择储蓄罐强调色",
+  "Cancel": "取消",
+  "Saving...": "保存中...",
+  "Save Changes": "保存更改",
+  "Create Pot": "创建储蓄罐",
+  "Current saved": "当前已存",
+  "Available to move": "当前可转入金额",
+  "Amount": "金额",
+  "This action cannot be undone.": "此操作无法撤销。",
+  "Deleting...": "删除中...",
+  "Failed to load pots.": "加载储蓄罐失败。",
+  "Unable to save pot.": "无法保存储蓄罐。",
+  "Unable to update funds.": "无法更新资金。",
+  "Insufficient funds.": "资金不足。",
+  "Unable to delete pot.": "无法删除储蓄罐。",
+  "Insufficient saved balance.": "储蓄金额不足。",
+  "Pot not found.": "未找到该储蓄罐。",
 };
 
 export function SettingsProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window === "undefined") {
-      return "light";
-    }
+  const [theme, setTheme] = useState("light");
+  const [locale, setLocale] = useState("en");
 
+  useEffect(() => {
     const savedTheme = window.localStorage.getItem("finance-theme");
-    return savedTheme === "dark" || savedTheme === "light" ? savedTheme : "light";
-  });
-  const [locale, setLocale] = useState(() => {
-    if (typeof window === "undefined") {
-      return "en";
-    }
-
     const savedLocale = window.localStorage.getItem("finance-locale");
-    return savedLocale === "en" || savedLocale === "zh-CN" ? savedLocale : "en";
-  });
+
+    const timeoutId = window.setTimeout(() => {
+      if (savedTheme === "dark" || savedTheme === "light") {
+        setTheme(savedTheme);
+      }
+
+      if (savedLocale === "en" || savedLocale === "zh-CN") {
+        setLocale(savedLocale);
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
+  }, []);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;

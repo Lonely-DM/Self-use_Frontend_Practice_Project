@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -30,19 +30,20 @@ const navItems = [
 function Sidebar({ collapsed = false, onToggleCollapse }) {
   const pathname = usePathname();
   const ToggleIcon = collapsed ? PanelLeftOpen : PanelLeftClose;
-  const [shouldAnimate] = useState(() => {
-    const shouldPlay = !hasPlayedSidebarIntro;
-    hasPlayedSidebarIntro = true;
-    return shouldPlay;
-  });
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { locale, setLocale, theme, setTheme, t } = useSettings();
+  const asideRef = useRef(null);
+
+  useEffect(() => {
+    if (!hasPlayedSidebarIntro && asideRef.current) {
+      hasPlayedSidebarIntro = true;
+      asideRef.current.classList.add(styles.sidebarIntro);
+    }
+  }, []);
 
   return (
     <>
-      <aside
-        className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""} ${shouldAnimate ? styles.sidebarIntro : ""}`}
-      >
+      <aside ref={asideRef} className={`${styles.sidebar} ${collapsed ? styles.collapsed : ""}`}>
         <div className={styles.topBlock}>
           <div className={styles.brandBlock}>
             <p className={styles.eyebrow}>{collapsed ? "PF" : t("Personal Finance")}</p>

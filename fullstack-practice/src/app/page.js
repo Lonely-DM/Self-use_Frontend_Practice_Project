@@ -63,9 +63,10 @@ export default function Home() {
       ) : (
         <>
           <SummaryCards
-            balance={overview.balance}
+            availableBalance={overview.availableBalance}
             income={overview.income}
             expenses={overview.expenses}
+            potsSaved={overview.potsSaved}
             delay={0.1}
           />
 

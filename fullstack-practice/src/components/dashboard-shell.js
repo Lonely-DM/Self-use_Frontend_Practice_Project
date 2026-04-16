@@ -8,6 +8,7 @@ import { useSettings } from "@/components/settings-provider";
 export default function DashboardShell({
   title,
   eyebrow,
+  description = "",
   children,
   headerContent = null,
   sidebarBalance = 0,
@@ -34,6 +35,7 @@ export default function DashboardShell({
             <div>
               <p className={styles.eyebrow}>{t(eyebrow)}</p>
               <h1 className={styles.title}>{t(title)}</h1>
+              {description ? <p className={styles.description}>{t(description)}</p> : null}
             </div>
             {headerContent ? <div className={styles.headerContent}>{headerContent}</div> : null}
           </header>
