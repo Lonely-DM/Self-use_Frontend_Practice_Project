@@ -14,9 +14,9 @@
   z-index: 30;
 }
 
-.completed {
-  border-color: color-mix(in srgb, var(--pot-color) 55%, white 45%);
-  box-shadow: 0 16px 34px rgba(39, 124, 120, 0.18);
+.overspent {
+  border-color: color-mix(in srgb, #dc2626 45%, var(--border-soft) 55%);
+  box-shadow: 0 16px 34px rgba(220, 38, 38, 0.12);
 }
 
 .header {
@@ -26,7 +26,7 @@
 }
 
 .name,
-.saved,
+.amount,
 .remaining,
 .updated,
 .badge {
@@ -39,7 +39,7 @@
   color: var(--foreground);
 }
 
-.saved {
+.amount {
   margin-top: 0.45rem;
   font-size: 1.9rem;
   font-weight: 700;
@@ -55,6 +55,10 @@
   font-size: 0.92rem;
 }
 
+.overValue {
+  color: #b91c1c;
+}
+
 .progressTrack {
   overflow: hidden;
   height: 0.7rem;
@@ -66,7 +70,7 @@
   width: var(--progress-width);
   height: 100%;
   border-radius: 999px;
-  background: var(--pot-color);
+  background: var(--budget-color);
   animation: fillBar 0.8s ease-out both;
 }
 
@@ -124,12 +128,12 @@
   color: var(--foreground);
   font-size: 0.82rem;
   font-weight: 700;
-  border: 1px solid color-mix(in srgb, var(--pot-color) 28%, var(--border-soft) 72%);
+  border: 1px solid color-mix(in srgb, var(--budget-color) 28%, var(--border-soft) 72%);
 }
 
-.completedBadge {
+.overspentBadge {
   background: transparent;
-  color: color-mix(in srgb, var(--pot-color) 72%, var(--foreground) 28%);
+  color: #b91c1c;
 }
 
 @media (max-width: 640px) {

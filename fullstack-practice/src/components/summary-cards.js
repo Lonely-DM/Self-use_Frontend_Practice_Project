@@ -34,15 +34,17 @@ export default function SummaryCards({
         </div>
       </article>
 
-      <article className={`${styles.card} ${styles.compactCard}`} style={{ animationDelay: `${delay + 0.1}s` }}>
-        <p className={styles.label}>{t("Income")}</p>
-        <p className={styles.value}>{formatCurrency(income)}</p>
-      </article>
+      <div className={styles.compactGroup}>
+        <article className={`${styles.card} ${styles.compactCard}`} style={{ animationDelay: `${delay + 0.1}s` }}>
+          <p className={styles.label}>{t("Income")}</p>
+          <p className={styles.value}>{formatCurrency(income)}</p>
+        </article>
 
-      <article className={`${styles.card} ${styles.compactCard}`} style={{ animationDelay: `${delay + 0.2}s` }}>
-        <p className={styles.label}>{t("Expenses")}</p>
-        <p className={styles.value}>{formatCurrency(expenses)}</p>
-      </article>
+        <article className={`${styles.card} ${styles.compactCard}`} style={{ animationDelay: `${delay + 0.2}s` }}>
+          <p className={styles.label}>{t("Expenses")}</p>
+          <p className={styles.value}>{formatCurrency(expenses)}</p>
+        </article>
+      </div>
     </section>
   );
 }

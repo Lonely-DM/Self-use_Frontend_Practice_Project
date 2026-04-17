@@ -4,6 +4,7 @@
   background: var(--surface);
   box-shadow: var(--shadow-soft);
   animation: fadeUp 0.7s ease-out both;
+  height: 100%;
 }
 
 .header {
@@ -27,6 +28,16 @@
   color: var(--foreground);
 }
 
+.viewAll {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.viewAll:hover {
+  color: var(--foreground);
+}
+
 .list {
   display: grid;
   gap: 1rem;
@@ -37,6 +48,7 @@
   padding: 1rem;
   border-radius: 12px;
   background: var(--surface-soft);
+  border: 1px solid color-mix(in srgb, var(--pot-color) 24%, var(--border-soft) 76%);
 }
 
 .row,
@@ -68,7 +80,11 @@
 .fill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #277c78 0%, #82c9d7 100%);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--pot-color) 84%, white 16%) 0%,
+    color-mix(in srgb, var(--pot-color) 58%, white 42%) 100%
+  );
 }
 
 @keyframes fadeUp {

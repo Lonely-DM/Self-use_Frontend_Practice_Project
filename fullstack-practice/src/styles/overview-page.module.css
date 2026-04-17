@@ -17,11 +17,8 @@
 }
 
 @media (min-width: 1280px) {
-  .primaryGrid {
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-  }
-
+  .primaryGrid,
   .secondaryGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
   }
 }

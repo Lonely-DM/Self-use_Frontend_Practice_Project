@@ -24,7 +24,7 @@ export default function PotCard({
 
   return (
     <article
-      className={`${styles.card} ${isCompleted ? styles.completed : ""}`}
+      className={`${styles.card} ${isCompleted ? styles.completed : ""} ${menuOpen ? styles.menuOpenCard : ""}`}
       style={{ animationDelay: `${delay}s`, "--progress-width": `${progress}%`, "--pot-color": pot.color }}
     >
       <div className={styles.header}>

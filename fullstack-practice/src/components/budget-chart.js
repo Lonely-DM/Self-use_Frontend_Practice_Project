@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "@/styles/budget-chart.module.css";
 import { formatCurrency } from "@/lib/format";
@@ -19,6 +20,7 @@ function getChartData(budgets) {
       category: item.category,
       amount: Number(item.amount || 0),
       spent: Number(item.spent || 0),
+      color: item.color,
     }))
     .filter((item) => item.spent > 0);
 
@@ -34,7 +36,7 @@ function getChartData(budgets) {
       category: item.category,
       amount: item.amount,
       spent: item.spent,
-      color: colors[index % colors.length],
+      color: item.color || colors[index % colors.length],
       startPercent: consumedPercent,
       visiblePercent: rawPercent,
     });
@@ -70,16 +72,21 @@ function nextPaint() {
 
 export default function BudgetChart({ budgets = [], delay = 0 }) {
   const circleRefs = useRef([]);
-  const amountRef = useRef(null);
   const timeoutsRef = useRef([]);
   const numberFrameRef = useRef(0);
   const sectionRef = useRef(null);
   const [activeSegmentId, setActiveSegmentId] = useState(null);
+  const [displayAmount, setDisplayAmount] = useState(0);
   const { t } = useSettings();
 
   const { totalSpent, totalBudget, segments } = useMemo(() => getChartData(budgets), [budgets]);
+  const visibleLegendSegments = useMemo(() => segments.slice(0, 4), [segments]);
   const timing = useMemo(() => getAnimationTiming(segments.length), [segments.length]);
   const entranceDelay = delay * 1000 + 700;
+  const activeSegment = useMemo(
+    () => segments.find((segment) => segment.id === activeSegmentId) || null,
+    [activeSegmentId, segments],
+  );
 
   useEffect(() => {
     if (!segments.length) {
@@ -88,22 +95,15 @@ export default function BudgetChart({ budgets = [], delay = 0 }) {
 
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const sectionElement = sectionRef.current;
-    const amountElement = amountRef.current;
     let cancelled = false;
 
     if (sectionElement) {
       sectionElement.style.animationDelay = `${delay}s`;
     }
 
-    const setAmountText = (value) => {
-      if (amountElement) {
-        amountElement.textContent = formatCurrency(value);
-      }
-    };
-
     const animateNumber = () => {
       if (prefersReducedMotion) {
-        setAmountText(totalSpent);
+        setDisplayAmount(totalSpent);
         return;
       }
 
@@ -115,7 +115,7 @@ export default function BudgetChart({ budgets = [], delay = 0 }) {
         }
 
         const progress = Math.min((now - startedAt) / timing.totalDuration, 1);
-        setAmountText(Math.round(totalSpent * progress));
+        setDisplayAmount(Math.round(totalSpent * progress));
 
         if (progress < 1) {
           numberFrameRef.current = window.requestAnimationFrame(step);
@@ -143,7 +143,7 @@ export default function BudgetChart({ budgets = [], delay = 0 }) {
         circle.style.strokeDashoffset = "0";
       });
 
-      setAmountText(0);
+      setDisplayAmount(0);
       await nextPaint();
 
       if (cancelled) {
@@ -177,7 +177,7 @@ export default function BudgetChart({ budgets = [], delay = 0 }) {
         }
       }
 
-      setAmountText(totalSpent);
+      setDisplayAmount(totalSpent);
     };
 
     run();
@@ -197,6 +197,9 @@ export default function BudgetChart({ budgets = [], delay = 0 }) {
           <p className={styles.eyebrow}>{t("Budget Status")}</p>
           <h2 className={styles.title}>{t("Budget Chart")}</h2>
         </div>
+        <Link href="/budgets" className={styles.viewAll}>
+          {t("View All")}
+        </Link>
       </div>
 
       <div className={styles.chartLayout}>
@@ -223,18 +226,20 @@ export default function BudgetChart({ budgets = [], delay = 0 }) {
           </svg>
           <div className={styles.chartCenter}>
             <span className={styles.centerLabel}>{t("Spent")}</span>
-            <span ref={amountRef} className={styles.centerValue}>
-              {formatCurrency(0)}
+            <span className={styles.centerValue}>
+              {formatCurrency(activeSegment ? activeSegment.spent : segments.length ? displayAmount : 0)}
             </span>
             <span className={styles.centerHint}>of {formatCurrency(totalBudget)}</span>
           </div>
         </div>
 
         <div className={styles.legend}>
-          {segments.map((segment) => (
+          {visibleLegendSegments.map((segment) => (
             <article
               key={segment.id}
               className={`${styles.legendItem} ${activeSegmentId === segment.id ? styles.legendItemHover : ""}`}
+              onMouseEnter={() => setActiveSegmentId(segment.id)}
+              onMouseLeave={() => setActiveSegmentId(null)}
             >
               <span className={styles.swatch} style={{ backgroundColor: segment.color }} />
               <div>

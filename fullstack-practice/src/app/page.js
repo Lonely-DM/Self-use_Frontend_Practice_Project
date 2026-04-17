@@ -62,6 +62,9 @@ export default function Home() {
         <div className={`${styles.messageCard} ${styles.errorCard}`}>{t(error)}</div>
       ) : (
         <>
+          {/*
+            Keep homepage modules intentionally compact so they match the dashboard preview role.
+          */}
           <SummaryCards
             availableBalance={overview.availableBalance}
             income={overview.income}
@@ -71,13 +74,13 @@ export default function Home() {
           />
 
           <div className={styles.primaryGrid}>
-            <TransactionsList transactions={overview.transactions} delay={0.2} />
+            <TransactionsList transactions={overview.transactions.slice(0, 5)} delay={0.2} />
             <BudgetChart budgets={overview.budgets} delay={0.3} />
           </div>
 
           <div className={styles.secondaryGrid}>
-            <PotsCard pots={overview.pots} delay={0.4} />
-            <RecurringBills recurringBills={overview.recurringBills} delay={0.5} />
+            <PotsCard pots={overview.pots.slice(0, 3)} delay={0.4} />
+            <RecurringBills recurringBills={overview.recurringBills.slice(0, 3)} delay={0.5} />
           </div>
         </>
       )}

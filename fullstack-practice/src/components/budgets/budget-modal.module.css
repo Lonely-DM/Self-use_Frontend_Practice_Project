@@ -1,0 +1,155 @@
+﻿.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(10px);
+}
+
+.modal {
+  width: min(100%, 32rem);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-strong);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 0;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.title {
+  margin: 0.55rem 0 0;
+  color: var(--foreground);
+}
+
+.closeButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.form {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+  color: var(--foreground);
+}
+
+.field input {
+  width: 100%;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--surface-soft);
+  color: var(--foreground);
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.field input::-webkit-outer-spin-button,
+.field input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.colorField {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--surface-soft);
+}
+
+.colorInput {
+  width: 3.5rem !important;
+  min-width: 3.5rem;
+  height: 3.5rem;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  background: transparent !important;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.colorInput::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.colorInput::-webkit-color-swatch {
+  border: 0;
+  border-radius: 14px;
+}
+
+.colorInput::-moz-color-swatch {
+  border: 0;
+  border-radius: 14px;
+}
+
+.colorMeta {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.colorValue {
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: 0.08em;
+}
+
+.colorHint {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.secondaryButton,
+.primaryButton {
+  padding: 0.8rem 1rem;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.secondaryButton {
+  background: var(--surface-soft);
+  color: var(--foreground);
+}
+
+.primaryButton {
+  background: #277C78;
+  color: white;
+}
+

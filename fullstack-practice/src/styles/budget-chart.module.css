@@ -27,6 +27,16 @@
   color: var(--foreground);
 }
 
+.viewAll {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.viewAll:hover {
+  color: var(--foreground);
+}
+
 .chartLayout {
   display: grid;
   gap: 1.5rem;

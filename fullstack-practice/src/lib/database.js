@@ -6,6 +6,7 @@ const DB_DIR = path.join(process.cwd(), "storage");
 const DB_FILE = path.join(DB_DIR, "catalog.sqlite");
 const WASM_DIR = path.join(process.cwd(), "node_modules", "sql.js", "dist");
 const DEFAULT_POT_COLOR = "#277C78";
+const DEFAULT_BUDGET_COLOR = "#277C78";
 
 let sqlPromise;
 let dbPromise;
@@ -19,10 +20,38 @@ const seedTransactions = [
 ];
 
 const seedBudgets = [
-  { category: "Entertainment", amount: 600, spent: 420 },
-  { category: "Bills", amount: 2200, spent: 1880 },
-  { category: "Dining Out", amount: 900, spent: 520 },
-  { category: "Personal Care", amount: 450, spent: 260 },
+  {
+    category: "Entertainment",
+    amount: 600,
+    spent: 420,
+    color: "#277C78",
+    created_at: "2026-04-01T09:00:00.000Z",
+    updated_at: "2026-04-11T09:00:00.000Z",
+  },
+  {
+    category: "Bills",
+    amount: 2200,
+    spent: 1880,
+    color: "#82C9D7",
+    created_at: "2026-04-02T09:00:00.000Z",
+    updated_at: "2026-04-12T09:00:00.000Z",
+  },
+  {
+    category: "Dining Out",
+    amount: 900,
+    spent: 520,
+    color: "#F2CDAC",
+    created_at: "2026-04-03T09:00:00.000Z",
+    updated_at: "2026-04-13T09:00:00.000Z",
+  },
+  {
+    category: "Personal Care",
+    amount: 450,
+    spent: 260,
+    color: "#626070",
+    created_at: "2026-04-04T09:00:00.000Z",
+    updated_at: "2026-04-14T09:00:00.000Z",
+  },
 ];
 
 const seedPots = [
@@ -131,6 +160,68 @@ function ensurePotsSchema(db) {
   db.run(`UPDATE pots SET updated_at = created_at WHERE updated_at IS NULL OR TRIM(updated_at) = ''`);
 }
 
+function ensureBudgetsSchema(db) {
+  const existingColumns = new Set(getTableColumns(db, "budgets"));
+
+  if (!existingColumns.has("color")) {
+    db.run("ALTER TABLE budgets ADD COLUMN color TEXT");
+  }
+
+  if (!existingColumns.has("created_at")) {
+    db.run("ALTER TABLE budgets ADD COLUMN created_at TEXT");
+  }
+
+  if (!existingColumns.has("updated_at")) {
+    db.run("ALTER TABLE budgets ADD COLUMN updated_at TEXT");
+  }
+
+  const now = getNowIso();
+  db.run(`UPDATE budgets SET color = '${DEFAULT_BUDGET_COLOR}' WHERE color IS NULL OR TRIM(color) = ''`);
+  db.run(`UPDATE budgets SET created_at = '${now}' WHERE created_at IS NULL OR TRIM(created_at) = ''`);
+  db.run(`UPDATE budgets SET updated_at = created_at WHERE updated_at IS NULL OR TRIM(updated_at) = ''`);
+}
+
+function mapBudgetRow(row) {
+  return {
+    id: Number(row.id),
+    category: row.category,
+    amount: Number(row.amount || 0),
+    spent: Number(row.spent || 0),
+    color: row.color || DEFAULT_BUDGET_COLOR,
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+  };
+}
+
+function listBudgetsFromDb(db) {
+  return execRows(
+    db,
+    "SELECT id, category, amount, spent, color, created_at, updated_at FROM budgets ORDER BY datetime(updated_at) DESC, id DESC",
+  ).map(mapBudgetRow);
+}
+
+function getBudgetByIdFromDb(db, id) {
+  return listBudgetsFromDb(db).find((budget) => budget.id === Number(id)) || null;
+}
+
+function buildBudgetsSummary(budgets) {
+  const totalBudgeted = budgets.reduce((sum, budget) => sum + budget.amount, 0);
+  const totalSpent = budgets.reduce((sum, budget) => sum + budget.spent, 0);
+  const totalRemaining = budgets.reduce(
+    (sum, budget) => sum + Math.max(budget.amount - budget.spent, 0),
+    0,
+  );
+  const overspentCount = budgets.filter((budget) => budget.spent > budget.amount).length;
+
+  return {
+    totalBudgeted,
+    totalSpent,
+    totalRemaining,
+    overspentCount,
+    totalCount: budgets.length,
+  };
+}
+
 function mapPotRow(row) {
   return {
     id: Number(row.id),
@@ -230,6 +321,10 @@ function normalizeColor(color) {
   return typeof color === "string" && color.trim() ? color.trim() : DEFAULT_POT_COLOR;
 }
 
+function normalizeBudgetColor(color) {
+  return typeof color === "string" && color.trim() ? color.trim() : DEFAULT_BUDGET_COLOR;
+}
+
 async function createDatabase() {
   const SQL = await getSQL();
   let db;
@@ -254,7 +349,10 @@ async function createDatabase() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       category TEXT NOT NULL,
       amount REAL NOT NULL,
-      spent REAL NOT NULL
+      spent REAL NOT NULL,
+      color TEXT NOT NULL DEFAULT '#277C78',
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
     );
 
     CREATE TABLE IF NOT EXISTS pots (
@@ -275,11 +373,12 @@ async function createDatabase() {
     );
   `);
 
+  ensureBudgetsSchema(db);
   ensurePotsSchema(db);
 
   const seeded = [
     seedTable(db, "transactions", seedTransactions, ["name", "amount", "date", "type"]),
-    seedTable(db, "budgets", seedBudgets, ["category", "amount", "spent"]),
+    seedTable(db, "budgets", seedBudgets, ["category", "amount", "spent", "color", "created_at", "updated_at"]),
     seedTable(db, "pots", seedPots, ["name", "target", "saved", "color", "created_at", "updated_at"]),
     seedTable(db, "recurring_bills", seedRecurringBills, ["name", "amount", "status"]),
   ].some(Boolean);
@@ -303,7 +402,7 @@ export async function getOverviewData() {
   const db = await getDb();
   const { income, expenses } = await ensureNonNegativeBalance(db);
   const pots = listPotsFromDb(db);
-  const budgets = execRows(db, "SELECT * FROM budgets ORDER BY id ASC");
+  const budgets = listBudgetsFromDb(db);
   const financialSnapshot = buildFinancialSnapshot({
     income,
     expenses,
@@ -320,6 +419,16 @@ export async function getOverviewData() {
     transactions: execRows(db, "SELECT * FROM transactions ORDER BY date DESC, id DESC"),
     budgets,
     recurringBills: execRows(db, "SELECT * FROM recurring_bills ORDER BY id ASC"),
+  };
+}
+
+export async function getBudgetsData() {
+  const db = await getDb();
+  const budgets = listBudgetsFromDb(db);
+
+  return {
+    budgets,
+    summary: buildBudgetsSummary(budgets),
   };
 }
 
@@ -436,4 +545,86 @@ export async function withdrawFundsFromPot(id, amount) {
 
   await saveDatabase(db);
   return getPotByIdFromDb(db, id);
+}
+
+export async function createBudget({ category, amount, spent = 0, color }) {
+  const db = await getDb();
+  const now = getNowIso();
+  const statement = db.prepare(
+    "INSERT INTO budgets (category, amount, spent, color, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)",
+  );
+
+  statement.run([category, Number(amount), Number(spent), normalizeBudgetColor(color), now, now]);
+  statement.free();
+
+  const [row] = execRows(db, "SELECT last_insert_rowid() AS id");
+  await saveDatabase(db);
+
+  return getBudgetByIdFromDb(db, Number(row?.id));
+}
+
+export async function updateBudget(id, { category, amount, color }) {
+  const db = await getDb();
+  const existing = getBudgetByIdFromDb(db, id);
+  if (!existing) {
+    throw new Error("Budget not found.");
+  }
+
+  const statement = db.prepare(
+    "UPDATE budgets SET category = ?, amount = ?, color = ?, updated_at = ? WHERE id = ?",
+  );
+  statement.run([category, Number(amount), normalizeBudgetColor(color), getNowIso(), Number(id)]);
+  statement.free();
+
+  await saveDatabase(db);
+  return getBudgetByIdFromDb(db, id);
+}
+
+export async function deleteBudget(id) {
+  const db = await getDb();
+  const existing = getBudgetByIdFromDb(db, id);
+  if (!existing) {
+    throw new Error("Budget not found.");
+  }
+
+  const statement = db.prepare("DELETE FROM budgets WHERE id = ?");
+  statement.run([Number(id)]);
+  statement.free();
+
+  await saveDatabase(db);
+}
+
+export async function addBudgetSpend(id, amount) {
+  const db = await getDb();
+  const existing = getBudgetByIdFromDb(db, id);
+  if (!existing) {
+    throw new Error("Budget not found.");
+  }
+
+  const statement = db.prepare("UPDATE budgets SET spent = ?, updated_at = ? WHERE id = ?");
+  statement.run([existing.spent + Number(amount), getNowIso(), Number(id)]);
+  statement.free();
+
+  await saveDatabase(db);
+  return getBudgetByIdFromDb(db, id);
+}
+
+export async function reduceBudgetSpend(id, amount) {
+  const db = await getDb();
+  const existing = getBudgetByIdFromDb(db, id);
+  if (!existing) {
+    throw new Error("Budget not found.");
+  }
+
+  const nextSpent = existing.spent - Number(amount);
+  if (nextSpent < 0) {
+    throw new Error("Spent amount cannot be negative.");
+  }
+
+  const statement = db.prepare("UPDATE budgets SET spent = ?, updated_at = ? WHERE id = ?");
+  statement.run([nextSpent, getNowIso(), Number(id)]);
+  statement.free();
+
+  await saveDatabase(db);
+  return getBudgetByIdFromDb(db, id);
 }

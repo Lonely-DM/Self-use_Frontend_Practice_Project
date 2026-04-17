@@ -4,6 +4,7 @@
   background: var(--surface);
   box-shadow: var(--shadow-soft);
   animation: fadeUp 0.7s ease-out both;
+  height: 100%;
 }
 
 .header {
@@ -27,18 +28,28 @@
   color: var(--foreground);
 }
 
+.viewAll {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.viewAll:hover {
+  color: var(--foreground);
+}
+
 .list {
   display: grid;
-  gap: 1rem;
-  margin-top: 1.4rem;
+  gap: 0.75rem;
+  margin-top: 1.15rem;
 }
 
 .item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 0.75rem;
+  padding: 0.8rem 0.9rem;
   border-radius: 12px;
   background: var(--surface-soft);
 }
@@ -53,7 +64,7 @@
 }
 
 .amount {
-  margin-top: 0.3rem;
+  margin-top: 0.2rem;
   color: var(--muted);
 }
 
@@ -65,9 +76,9 @@
 }
 
 .status {
-  padding: 0.45rem 0.8rem;
+  padding: 0.38rem 0.72rem;
   border-radius: 999px;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
