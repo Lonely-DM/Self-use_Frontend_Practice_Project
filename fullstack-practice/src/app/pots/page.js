@@ -39,6 +39,7 @@ export default function PotsPage() {
   const [potsData, setPotsData] = useState({ pots: [], summary: emptySummary });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [query, setQuery] = useState("");
   const [fundsError, setFundsError] = useState("");
   const [modalState, setModalState] = useState({ open: false, mode: "new", pot: null });
   const [fundsState, setFundsState] = useState({ open: false, mode: "add", pot: null });
@@ -77,6 +78,15 @@ export default function PotsPage() {
     ),
     [t],
   );
+
+  const filteredPots = useMemo(() => {
+    const keyword = query.trim().toLowerCase();
+    if (!keyword) {
+      return potsData.pots;
+    }
+
+    return potsData.pots.filter((pot) => pot.name.toLowerCase().includes(keyword));
+  }, [potsData.pots, query]);
 
   async function handlePotSubmit(form) {
     setSubmitting(true);
@@ -184,11 +194,23 @@ export default function PotsPage() {
           <div className={styles.stateCard}>{t("Loading pots...")}</div>
         ) : (
           <>
+            <div className={styles.toolbar}>
+              <div className={styles.searchWrap}>
+                <input
+                  className={styles.searchInput}
+                  type="search"
+                  placeholder={t("Search pots")}
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                />
+              </div>
+            </div>
+
             <PotsSummary summary={potsData.summary} delay={0.05} t={t} />
 
-            {potsData.pots.length ? (
+            {filteredPots.length ? (
               <section className={styles.grid}>
-                {potsData.pots.map((pot, index) => (
+                {filteredPots.map((pot, index) => (
                   <PotCard
                     key={pot.id}
                     pot={pot}
@@ -209,15 +231,17 @@ export default function PotsPage() {
               </section>
             ) : (
               <section className={styles.emptyState}>
-                <h2>{t("No saving pots yet.")}</h2>
-                <p>{t("Start your first goal today.")}</p>
-                <button
-                  className={styles.newButton}
-                  type="button"
-                  onClick={() => setModalState({ open: true, mode: "new", pot: null })}
-                >
-                  + {t("New Pot")}
-                </button>
+                <h2>{query ? t("No matching pots.") : t("No saving pots yet.")}</h2>
+                <p>{query ? t("Try a different keyword.") : t("Start your first goal today.")}</p>
+                {!query ? (
+                  <button
+                    className={styles.newButton}
+                    type="button"
+                    onClick={() => setModalState({ open: true, mode: "new", pot: null })}
+                  >
+                    + {t("New Pot")}
+                  </button>
+                ) : null}
               </section>
             )}
           </>

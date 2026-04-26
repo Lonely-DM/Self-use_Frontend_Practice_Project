@@ -21,14 +21,20 @@
 }
 
 .header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
   gap: 1rem;
-  padding: 1.5rem;
+  padding: 1.25rem 1.5rem;
   border-radius: 12px;
   background: var(--surface);
   box-shadow: var(--shadow-strong);
+}
+
+.headerText {
+  display: grid;
+  align-content: start;
+  justify-items: start;
 }
 
 .eyebrow {
@@ -41,21 +47,22 @@
 }
 
 .title {
-  margin: 0.7rem 0 0;
+  margin: 0.45rem 0 0;
   font-family: var(--font-display), serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.05;
+  font-size: clamp(2rem, 3.4vw, 2.85rem);
+  line-height: 1.02;
 }
 
 .description {
-  margin: 0.75rem 0 0;
+  margin: 0.55rem 0 0;
   max-width: 38rem;
-  line-height: 1.7;
+  line-height: 1.5;
   color: var(--muted);
 }
 
 .headerContent {
   flex-shrink: 0;
+  align-self: start;
 }
 
 .body {
@@ -87,7 +94,11 @@
   }
 
   .header {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     padding: 1.125rem;
+  }
+
+  .headerContent {
+    width: 100%;
   }
 }

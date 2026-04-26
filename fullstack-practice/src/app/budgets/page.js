@@ -40,6 +40,7 @@ export default function BudgetsPage() {
   const [budgetsData, setBudgetsData] = useState({ budgets: [], summary: emptySummary });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [query, setQuery] = useState("");
   const [spendError, setSpendError] = useState("");
   const [modalState, setModalState] = useState({ open: false, mode: "new", budget: null });
   const [spendState, setSpendState] = useState({ open: false, mode: "spend", budget: null });
@@ -78,6 +79,15 @@ export default function BudgetsPage() {
     ),
     [t],
   );
+
+  const filteredBudgets = useMemo(() => {
+    const keyword = query.trim().toLowerCase();
+    if (!keyword) {
+      return budgetsData.budgets;
+    }
+
+    return budgetsData.budgets.filter((budget) => budget.category.toLowerCase().includes(keyword));
+  }, [budgetsData.budgets, query]);
 
   async function handleBudgetSubmit(form) {
     setSubmitting(true);
@@ -184,11 +194,23 @@ export default function BudgetsPage() {
           <div className={styles.stateCard}>{t("Loading budgets...")}</div>
         ) : (
           <>
+            <div className={styles.toolbar}>
+              <div className={styles.searchWrap}>
+                <input
+                  className={styles.searchInput}
+                  type="search"
+                  placeholder={t("Search budgets")}
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                />
+              </div>
+            </div>
+
             <BudgetsSummary summary={budgetsData.summary} delay={0.05} t={t} />
 
-            {budgetsData.budgets.length ? (
+            {filteredBudgets.length ? (
               <section className={styles.grid}>
-                {budgetsData.budgets.map((budget, index) => (
+                {filteredBudgets.map((budget, index) => (
                   <BudgetCard
                     key={budget.id}
                     budget={budget}
@@ -209,11 +231,13 @@ export default function BudgetsPage() {
               </section>
             ) : (
               <section className={styles.emptyState}>
-                <h2>{t("No budgets yet.")}</h2>
-                <p>{t("Start your first spending plan today.")}</p>
-                <button className={styles.newButton} type="button" onClick={() => setModalState({ open: true, mode: "new", budget: null })}>
-                  + {t("New Budget")}
-                </button>
+                <h2>{query ? t("No matching budgets.") : t("No budgets yet.")}</h2>
+                <p>{query ? t("Try a different keyword.") : t("Start your first spending plan today.")}</p>
+                {!query ? (
+                  <button className={styles.newButton} type="button" onClick={() => setModalState({ open: true, mode: "new", budget: null })}>
+                    + {t("New Budget")}
+                  </button>
+                ) : null}
               </section>
             )}
           </>

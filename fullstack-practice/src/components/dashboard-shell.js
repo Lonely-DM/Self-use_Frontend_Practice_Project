@@ -32,7 +32,7 @@ export default function DashboardShell({
 
         <div className={styles.content}>
           <header className={styles.header}>
-            <div>
+            <div className={styles.headerText}>
               <p className={styles.eyebrow}>{t(eyebrow)}</p>
               <h1 className={styles.title}>{t(title)}</h1>
               {description ? <p className={styles.description}>{t(description)}</p> : null}

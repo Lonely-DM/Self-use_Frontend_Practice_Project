@@ -82,9 +82,27 @@ const seedPots = [
 ];
 
 const seedRecurringBills = [
-  { name: "Rent", amount: 1800, status: "paid" },
-  { name: "Internet", amount: 120, status: "upcoming" },
-  { name: "Credit Card", amount: 680, status: "due" },
+  {
+    name: "Rent",
+    amount: 1800,
+    status: "paid",
+    created_at: "2026-04-01T09:00:00.000Z",
+    updated_at: "2026-04-11T09:00:00.000Z",
+  },
+  {
+    name: "Internet",
+    amount: 120,
+    status: "upcoming",
+    created_at: "2026-04-02T09:00:00.000Z",
+    updated_at: "2026-04-12T09:00:00.000Z",
+  },
+  {
+    name: "Credit Card",
+    amount: 680,
+    status: "due",
+    created_at: "2026-04-03T09:00:00.000Z",
+    updated_at: "2026-04-13T09:00:00.000Z",
+  },
 ];
 
 async function getSQL() {
@@ -181,6 +199,22 @@ function ensureBudgetsSchema(db) {
   db.run(`UPDATE budgets SET updated_at = created_at WHERE updated_at IS NULL OR TRIM(updated_at) = ''`);
 }
 
+function ensureRecurringBillsSchema(db) {
+  const existingColumns = new Set(getTableColumns(db, "recurring_bills"));
+
+  if (!existingColumns.has("created_at")) {
+    db.run("ALTER TABLE recurring_bills ADD COLUMN created_at TEXT");
+  }
+
+  if (!existingColumns.has("updated_at")) {
+    db.run("ALTER TABLE recurring_bills ADD COLUMN updated_at TEXT");
+  }
+
+  const now = getNowIso();
+  db.run(`UPDATE recurring_bills SET created_at = '${now}' WHERE created_at IS NULL OR TRIM(created_at) = ''`);
+  db.run(`UPDATE recurring_bills SET updated_at = created_at WHERE updated_at IS NULL OR TRIM(updated_at) = ''`);
+}
+
 function mapBudgetRow(row) {
   return {
     id: Number(row.id),
@@ -219,6 +253,42 @@ function buildBudgetsSummary(budgets) {
     totalRemaining,
     overspentCount,
     totalCount: budgets.length,
+  };
+}
+
+function mapRecurringBillRow(row) {
+  return {
+    id: Number(row.id),
+    name: row.name,
+    amount: Number(row.amount || 0),
+    status: row.status,
+    created_at: row.created_at,
+    updated_at: row.updated_at,
+  };
+}
+
+function listRecurringBillsFromDb(db) {
+  return execRows(
+    db,
+    "SELECT id, name, amount, status, created_at, updated_at FROM recurring_bills ORDER BY datetime(updated_at) DESC, id DESC",
+  ).map(mapRecurringBillRow);
+}
+
+function getRecurringBillByIdFromDb(db, id) {
+  return listRecurringBillsFromDb(db).find((bill) => bill.id === Number(id)) || null;
+}
+
+function buildRecurringBillsSummary(recurringBills) {
+  const totalBills = recurringBills.length;
+  const monthlyTotal = recurringBills.reduce((sum, bill) => sum + bill.amount, 0);
+  const paidCount = recurringBills.filter((bill) => bill.status === "paid").length;
+  const dueCount = recurringBills.filter((bill) => bill.status === "due").length;
+
+  return {
+    totalBills,
+    monthlyTotal,
+    paidCount,
+    dueCount,
   };
 }
 
@@ -325,6 +395,10 @@ function normalizeBudgetColor(color) {
   return typeof color === "string" && color.trim() ? color.trim() : DEFAULT_BUDGET_COLOR;
 }
 
+function normalizeRecurringStatus(status) {
+  return status === "paid" || status === "upcoming" || status === "due" ? status : "upcoming";
+}
+
 async function createDatabase() {
   const SQL = await getSQL();
   let db;
@@ -369,18 +443,21 @@ async function createDatabase() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       amount REAL NOT NULL,
-      status TEXT NOT NULL CHECK (status IN ('paid', 'upcoming', 'due'))
+      status TEXT NOT NULL CHECK (status IN ('paid', 'upcoming', 'due')),
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
     );
   `);
 
   ensureBudgetsSchema(db);
   ensurePotsSchema(db);
+  ensureRecurringBillsSchema(db);
 
   const seeded = [
     seedTable(db, "transactions", seedTransactions, ["name", "amount", "date", "type"]),
     seedTable(db, "budgets", seedBudgets, ["category", "amount", "spent", "color", "created_at", "updated_at"]),
     seedTable(db, "pots", seedPots, ["name", "target", "saved", "color", "created_at", "updated_at"]),
-    seedTable(db, "recurring_bills", seedRecurringBills, ["name", "amount", "status"]),
+    seedTable(db, "recurring_bills", seedRecurringBills, ["name", "amount", "status", "created_at", "updated_at"]),
   ].some(Boolean);
 
   if (seeded) {
@@ -418,7 +495,7 @@ export async function getOverviewData() {
     pots,
     transactions: execRows(db, "SELECT * FROM transactions ORDER BY date DESC, id DESC"),
     budgets,
-    recurringBills: execRows(db, "SELECT * FROM recurring_bills ORDER BY id ASC"),
+    recurringBills: listRecurringBillsFromDb(db),
   };
 }
 
@@ -448,6 +525,16 @@ export async function getPotsData() {
       ...buildPotsSummary(pots),
       currentAvailable: financialSnapshot.currentAvailable,
     },
+  };
+}
+
+export async function getRecurringBillsData() {
+  const db = await getDb();
+  const recurringBills = listRecurringBillsFromDb(db);
+
+  return {
+    recurringBills,
+    summary: buildRecurringBillsSummary(recurringBills),
   };
 }
 
@@ -627,4 +714,51 @@ export async function reduceBudgetSpend(id, amount) {
 
   await saveDatabase(db);
   return getBudgetByIdFromDb(db, id);
+}
+
+export async function createRecurringBill({ name, amount, status }) {
+  const db = await getDb();
+  const now = getNowIso();
+  const statement = db.prepare(
+    "INSERT INTO recurring_bills (name, amount, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?)",
+  );
+
+  statement.run([name, Number(amount), normalizeRecurringStatus(status), now, now]);
+  statement.free();
+
+  const [row] = execRows(db, "SELECT last_insert_rowid() AS id");
+  await saveDatabase(db);
+
+  return getRecurringBillByIdFromDb(db, Number(row?.id));
+}
+
+export async function updateRecurringBill(id, { name, amount, status }) {
+  const db = await getDb();
+  const existing = getRecurringBillByIdFromDb(db, id);
+  if (!existing) {
+    throw new Error("Recurring bill not found.");
+  }
+
+  const statement = db.prepare(
+    "UPDATE recurring_bills SET name = ?, amount = ?, status = ?, updated_at = ? WHERE id = ?",
+  );
+  statement.run([name, Number(amount), normalizeRecurringStatus(status), getNowIso(), Number(id)]);
+  statement.free();
+
+  await saveDatabase(db);
+  return getRecurringBillByIdFromDb(db, id);
+}
+
+export async function deleteRecurringBill(id) {
+  const db = await getDb();
+  const existing = getRecurringBillByIdFromDb(db, id);
+  if (!existing) {
+    throw new Error("Recurring bill not found.");
+  }
+
+  const statement = db.prepare("DELETE FROM recurring_bills WHERE id = ?");
+  statement.run([Number(id)]);
+  statement.free();
+
+  await saveDatabase(db);
 }
