@@ -341,6 +341,43 @@ function buildFinancialSnapshot({ income, expenses, pots }) {
   };
 }
 
+function mapTransactionRow(row) {
+  return {
+    id: Number(row.id),
+    name: row.name,
+    amount: Number(row.amount || 0),
+    date: row.date,
+    type: row.type,
+  };
+}
+
+function listTransactionsFromDb(db) {
+  return execRows(
+    db,
+    "SELECT id, name, amount, date, type FROM transactions ORDER BY date DESC, id DESC",
+  ).map(mapTransactionRow);
+}
+
+function getTransactionByIdFromDb(db, id) {
+  return listTransactionsFromDb(db).find((transaction) => transaction.id === Number(id)) || null;
+}
+
+function buildTransactionsSummary(transactions) {
+  const totalIncome = transactions
+    .filter((transaction) => transaction.type === "income")
+    .reduce((sum, transaction) => sum + transaction.amount, 0);
+  const totalExpenses = transactions
+    .filter((transaction) => transaction.type === "expense")
+    .reduce((sum, transaction) => sum + transaction.amount, 0);
+
+  return {
+    totalTransactions: transactions.length,
+    totalIncome,
+    totalExpenses,
+    netChange: totalIncome - totalExpenses,
+  };
+}
+
 function getTransactionTotals(db) {
   const [incomeRow] = execRows(
     db,
@@ -397,6 +434,10 @@ function normalizeBudgetColor(color) {
 
 function normalizeRecurringStatus(status) {
   return status === "paid" || status === "upcoming" || status === "due" ? status : "upcoming";
+}
+
+function normalizeTransactionType(type) {
+  return type === "income" || type === "expense" ? type : "expense";
 }
 
 async function createDatabase() {
@@ -493,9 +534,20 @@ export async function getOverviewData() {
     availableBalance: financialSnapshot.currentAvailable,
     potsSaved: financialSnapshot.potsSaved,
     pots,
-    transactions: execRows(db, "SELECT * FROM transactions ORDER BY date DESC, id DESC"),
+    transactions: listTransactionsFromDb(db),
     budgets,
     recurringBills: listRecurringBillsFromDb(db),
+  };
+}
+
+export async function getTransactionsData() {
+  const db = await getDb();
+  await ensureNonNegativeBalance(db);
+  const transactions = listTransactionsFromDb(db);
+
+  return {
+    transactions,
+    summary: buildTransactionsSummary(transactions),
   };
 }
 
@@ -757,6 +809,52 @@ export async function deleteRecurringBill(id) {
   }
 
   const statement = db.prepare("DELETE FROM recurring_bills WHERE id = ?");
+  statement.run([Number(id)]);
+  statement.free();
+
+  await saveDatabase(db);
+}
+
+export async function createTransaction({ name, amount, date, type }) {
+  const db = await getDb();
+  const statement = db.prepare(
+    "INSERT INTO transactions (name, amount, date, type) VALUES (?, ?, ?, ?)",
+  );
+
+  statement.run([name, Number(amount), date, normalizeTransactionType(type)]);
+  statement.free();
+
+  const [row] = execRows(db, "SELECT last_insert_rowid() AS id");
+  await saveDatabase(db);
+
+  return getTransactionByIdFromDb(db, Number(row?.id));
+}
+
+export async function updateTransaction(id, { name, amount, date, type }) {
+  const db = await getDb();
+  const existing = getTransactionByIdFromDb(db, id);
+  if (!existing) {
+    throw new Error("Transaction not found.");
+  }
+
+  const statement = db.prepare(
+    "UPDATE transactions SET name = ?, amount = ?, date = ?, type = ? WHERE id = ?",
+  );
+  statement.run([name, Number(amount), date, normalizeTransactionType(type), Number(id)]);
+  statement.free();
+
+  await saveDatabase(db);
+  return getTransactionByIdFromDb(db, id);
+}
+
+export async function deleteTransaction(id) {
+  const db = await getDb();
+  const existing = getTransactionByIdFromDb(db, id);
+  if (!existing) {
+    throw new Error("Transaction not found.");
+  }
+
+  const statement = db.prepare("DELETE FROM transactions WHERE id = ?");
   statement.run([Number(id)]);
   statement.free();
 

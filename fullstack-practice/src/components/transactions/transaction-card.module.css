@@ -1,0 +1,153 @@
+﻿.card {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--surface-soft);
+  animation: fadeUp 0.6s ease-out both;
+}
+
+.menuOpenCard {
+  z-index: 30;
+}
+
+.main,
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.main {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.meta {
+  justify-content: flex-start;
+}
+
+.name,
+.amount,
+.date {
+  margin: 0;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.amount {
+  margin-top: 0.3rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.incomeAmount,
+.incomeType {
+  color: #0f766e;
+}
+
+.expenseAmount,
+.expenseType {
+  color: #b91c1c;
+}
+
+.date {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.type {
+  font-size: 0.82rem;
+  font-weight: 700;
+  background: transparent;
+  padding: 0;
+}
+
+.menuWrap {
+  position: relative;
+}
+
+.menuButton {
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  z-index: 20;
+  display: grid;
+  min-width: 9rem;
+  padding: 0.4rem;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow-strong);
+}
+
+.menu button {
+  padding: 0.7rem 0.8rem;
+  border: 0;
+  border-radius: 10px;
+  text-align: left;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.menu button:hover {
+  background: var(--surface-soft);
+}
+
+.deleteAction {
+  color: #b91c1c !important;
+}
+
+@media (min-width: 641px) {
+  .card {
+    grid-template-columns: minmax(0, 1.4fr) auto auto;
+    align-items: center;
+  }
+
+  .meta {
+    justify-content: flex-end;
+    gap: 1.25rem;
+  }
+
+  .menuWrap {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 640px) {
+  .meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menuWrap {
+    justify-self: start;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
