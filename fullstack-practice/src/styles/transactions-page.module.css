@@ -7,22 +7,91 @@
 .toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
 }
 
 .searchWrap {
+  position: relative;
   flex: 1;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  color: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .searchInput {
   width: 100%;
-  padding: 0.85rem 1rem;
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
   border: 1px solid var(--border-soft);
   border-radius: 12px;
   background: var(--surface);
   color: var(--foreground);
   box-shadow: var(--shadow-soft);
+}
+
+.filterWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.filterButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+}
+
+.filterButtonActive {
+  border-color: rgba(39, 124, 120, 0.45);
+  box-shadow: 0 0 0 4px rgba(39, 124, 120, 0.1);
+}
+
+.filterPanel {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  right: 0;
+  z-index: 30;
+  display: grid;
+  gap: 0.9rem;
+  min-width: 16rem;
+  padding: 1rem;
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow-strong);
+}
+
+.filterField {
+  display: grid;
+  gap: 0.45rem;
+  color: var(--foreground);
+}
+
+.filterField span {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.filterField select {
+  width: 100%;
+  min-height: 2.8rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--surface-soft);
+  color: var(--foreground);
 }
 
 .newButton,
@@ -195,6 +264,18 @@
   .toolbar,
   .confirmActions {
     flex-direction: column;
+  }
+
+  .filterWrap,
+  .filterButton {
+    width: 100%;
+  }
+
+  .filterPanel {
+    left: 0;
+    right: auto;
+    width: 100%;
+    min-width: 0;
   }
 }
 

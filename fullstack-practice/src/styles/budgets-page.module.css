@@ -12,12 +12,22 @@
 }
 
 .searchWrap {
+  position: relative;
   flex: 1;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  color: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .searchInput {
   width: 100%;
-  padding: 0.85rem 1rem;
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
   border: 1px solid var(--border-soft);
   border-radius: 12px;
   background: var(--surface);

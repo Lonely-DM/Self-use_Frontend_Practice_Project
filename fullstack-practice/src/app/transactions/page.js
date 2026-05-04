@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { Filter, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import DashboardShell from "@/components/dashboard-shell";
 import { useSettings } from "@/components/settings-provider";
@@ -37,6 +38,9 @@ export default function TransactionsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [timeRange, setTimeRange] = useState("all");
+  const [filterOpen, setFilterOpen] = useState(false);
   const [modalState, setModalState] = useState({ open: false, mode: "new", transaction: null });
   const [deleteTransactionState, setDeleteTransactionState] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -67,15 +71,32 @@ export default function TransactionsPage() {
 
   const filteredTransactions = useMemo(() => {
     const keyword = query.trim().toLowerCase();
-    if (!keyword) {
-      return data.transactions;
-    }
+    const now = new Date();
 
     return data.transactions.filter((transaction) => {
       const source = `${transaction.name} ${transaction.type} ${transaction.date}`.toLowerCase();
-      return source.includes(keyword);
+      const matchesKeyword = !keyword || source.includes(keyword);
+      const matchesType = typeFilter === "all" || transaction.type === typeFilter;
+
+      let matchesTime = true;
+      if (timeRange !== "all") {
+        const transactionDate = new Date(transaction.date);
+        const diffDays = (now.getTime() - transactionDate.getTime()) / (1000 * 60 * 60 * 24);
+
+        if (timeRange === "7d") {
+          matchesTime = diffDays <= 7;
+        } else if (timeRange === "30d") {
+          matchesTime = diffDays <= 30;
+        } else if (timeRange === "90d") {
+          matchesTime = diffDays <= 90;
+        } else if (timeRange === "year") {
+          matchesTime = transactionDate.getFullYear() === now.getFullYear();
+        }
+      }
+
+      return matchesKeyword && matchesType && matchesTime;
     });
-  }, [data.transactions, query]);
+  }, [data.transactions, query, timeRange, typeFilter]);
 
   async function handleSubmit(form) {
     setSubmitting(true);
@@ -154,6 +175,7 @@ export default function TransactionsPage() {
 
         <div className={styles.toolbar}>
           <div className={styles.searchWrap}>
+            <Search className={styles.searchIcon} size={18} strokeWidth={2.1} aria-hidden="true" />
             <input
               className={styles.searchInput}
               type="search"
@@ -161,6 +183,40 @@ export default function TransactionsPage() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
+          </div>
+          <div className={styles.filterWrap}>
+            <button
+              type="button"
+              className={`${styles.filterButton} ${filterOpen ? styles.filterButtonActive : ""}`}
+              onClick={() => setFilterOpen((current) => !current)}
+            >
+              <Filter size={18} strokeWidth={2.1} aria-hidden="true" />
+              <span>{t("Filter")}</span>
+            </button>
+
+            {filterOpen ? (
+              <div className={styles.filterPanel}>
+                <label className={styles.filterField}>
+                  <span>{t("Type")}</span>
+                  <select value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)}>
+                    <option value="all">{t("All Types")}</option>
+                    <option value="income">{t("Income")}</option>
+                    <option value="expense">{t("Expenses")}</option>
+                  </select>
+                </label>
+
+                <label className={styles.filterField}>
+                  <span>{t("Time Range")}</span>
+                  <select value={timeRange} onChange={(event) => setTimeRange(event.target.value)}>
+                    <option value="all">{t("All Time")}</option>
+                    <option value="7d">{t("Last 7 Days")}</option>
+                    <option value="30d">{t("Last 30 Days")}</option>
+                    <option value="90d">{t("Last 90 Days")}</option>
+                    <option value="year">{t("This Year")}</option>
+                  </select>
+                </label>
+              </div>
+            ) : null}
           </div>
         </div>
 
@@ -193,9 +249,9 @@ export default function TransactionsPage() {
               </section>
             ) : (
               <section className={styles.emptyState}>
-                <h2>{query ? t("No matching transactions.") : t("No transactions yet.")}</h2>
-                <p>{query ? t("Try a different keyword.") : t("Add your first income or expense today.")}</p>
-                {!query ? (
+                <h2>{query || typeFilter !== "all" || timeRange !== "all" ? t("No matching transactions.") : t("No transactions yet.")}</h2>
+                <p>{query || typeFilter !== "all" || timeRange !== "all" ? t("Try a different keyword.") : t("Add your first income or expense today.")}</p>
+                {!query && typeFilter === "all" && timeRange === "all" ? (
                   <button className={styles.newButton} type="button" onClick={() => setModalState({ open: true, mode: "new", transaction: null })}>
                     + {t("New Transaction")}
                   </button>

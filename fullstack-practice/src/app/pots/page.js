@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import DashboardShell from "@/components/dashboard-shell";
 import { useSettings } from "@/components/settings-provider";
@@ -196,6 +197,7 @@ export default function PotsPage() {
           <>
             <div className={styles.toolbar}>
               <div className={styles.searchWrap}>
+                <Search className={styles.searchIcon} size={18} strokeWidth={2.1} aria-hidden="true" />
                 <input
                   className={styles.searchInput}
                   type="search"
